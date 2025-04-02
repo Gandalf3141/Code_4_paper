@@ -1,0 +1,117 @@
+******************************  OR PAPER  *********************************
+* Intelligent modeling of nonlinear dynamical systems by machine learning *
+* -> führt OR ein und ist damit Grundlage für unsere Arbeit               *
+**************************************************************************
+
+                   # Idee: 
+Fokus auf die Untersuchung der Performance Unterschiede zwischen 
+OR (output recurrence) und TF (teacher forcing) für unterschiedliche 
+Netzwerkarchitekturen und dynamische Systeme. Der Beitrag wäre damit 
+die Erweiterung(/Überprüfung) der Behauptungen aus dem OR Paper.
+
+                   # Die Frage die beantwortet wird wäre: 
+   Lässt sich 'OR > TF' aus OR Paper auf andere Architekturen und Systeme 
+                      verallgemeinern?
+
+**************************************************************************
+
+                 # Grobe Skizze für den Aufbau des Papers:
+                  ---------------------------------------
+
+                 >> Abstract: (1/2)
+                     Was machen wir / wieso etc. ...
+                Hier schon das OR Paper* als wichtigsten Bezug erwähnen.
+
+                  ---------------------------------------
+                 >> Introduction: (2)
+
+                > Kurz den Modellierungsansatz erklären.. 
+                   [ \hat{x}(t+1) = \hat{x}(t) + NN(\hat{x}(t), u(t)) ]
+                > Wahl der neuronalen Netze erklären 
+                > Unterschiedliche dyn. Systeme anführen 
+                    - da Messdaten bevorzugt wären: gesamtes Ventil als System?
+                    - eventuell extra System betrachten? (z.B. Benchmark-daten?)
+
+                > OR vs TF nochmal vorstellen (? kommt in OR Paper vor)
+
+                  ---------------------------------------
+                 >> Results: (2)
+
+                > Plots der Ergebnisse
+
+                  ---------------------------------------
+                 >> Conclusion (1/2)
+
+                > 'OR > TF' auch bei anderen Netzwerkarchitekturen (OR Paper bestätigt!)
+                > ODER 'OR > TF' nicht \forall Netzwerkarchitekturen \forall Systeme gültig 
+                -> Begründung / Schlussfolgerung / Ausblick
+
+                  ---------------------------------------
+                 >> Literatur + Abstract
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*OR Paper = Intelligent modeling of nonlinear dynamical systems by machine learning -> führt OR ein und ist damit Grundlage für unsere Arbeit
+
+Idee: Fokus auf die Untersuchung der Performance Unterschiede zwischen 
+OR (output recurrence) und TF (teacher forcing) für unterschiedliche Netzwerkarchitekturen und dynamische Systeme.
+Der Beitrag wäre damit die Erweiterung(/Überprüfung) der Behauptungen aus dem OR Paper.
+
+Die Frage die beantwortet will wäre: 
+Lässt sich 'OR > TF' aus OR Paper auf andere Architekturen und Systeme verallgemeinern?
+
+
+
+Grobe Skizze für den Aufbau des Papers:
+---------------------------------------
+
+>> Abstract: (1/2)
+	    Was machen wir / wieso etc. ...
+	    Hier schon das OR Paper* als wichtigsten Bezug erwähnen.
+
+---------------------------------------
+>> Introduction: (2)
+
+> Kurz den Modellierungsansatz erklären.. [ \hat{x}(t+1) = \hat{x}(t) + NN(\hat{x}(t), u(t)) ]
+> Wahl der neuronalen Netze erklären 
+> Unterschiedliche dyn. Systeme anführen 
+		- da Messdaten bevorzugt wären: gesamtes Ventil als System?
+		- eventuell extra System betrachten? (z.B. Benchmark-daten?)
+
+> OR vs TF nochmal vorstellen (? kommt in OR Paper vor)
+
+---------------------------------------
+>> Results: (2)
+
+> 
+> Plots der Ergebnisse
+
+---------------------------------------
+>> Conclusion (1/2)
+
+> 'OR > TF' auch bei anderen Netzwerkarchitekturen (OR Paper bestätigt!)
+> ODER 'OR > TF' nicht \forall Netzwerkarchitekturen \forall Systeme gültig 
+  -> Begründung / Schlussfolgerung / Ausblick
+
+---------------------------------------
+>> Literatur + Abstract 
+
+
+
+
+
+
