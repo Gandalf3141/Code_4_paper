@@ -1,0 +1,14 @@
+> Files weiterverwenden
+
+    die wichtigsten Files sind in Experiment Meassurements!
+    fehlende Netzwerkarchitekturen müssen hinzugefügt/angepasst werden whsl aus NN_classes_NEW ?
+
+Ziel wäre eine einfache Aufteilung:
+
+- NN classen
+- get data
+- load data 
+- train/save network 
+- test/visualize results
+
+>>> möglichst kompakt halten!
