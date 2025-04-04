@@ -46,6 +46,10 @@ def train_lstm(input_data, model,  optimizer, lr_scheduler):
 
     return np.mean(total_loss)
 
+def train_mlp(input_data, model,  optimizer, lr_scheduler):
+ return
+def train_tcn(input_data, model,  optimizer, lr_scheduler):
+ return
 
 
 def main(parameters, i):
@@ -53,32 +57,29 @@ def main(parameters, i):
     params_lstm = parameters
 
     # Configure logging
-    log_file = f'meas_training_lstm{i}.log'
+    log_file = f'training_{i}.log'
     filemode = 'a' if os.path.exists(log_file) else 'w'
     logging.basicConfig(filename=log_file, filemode=filemode, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
     # Initialize the LSTM model
     model_lstm = OR_LSTM(input_size=4, hidden_size=params_lstm["h_size"], out_size=2, layers=params_lstm["l_num"], window_size=params_lstm["window_size"]).to(device)
 
+    model_mlp = OR_MLP(input_size=4, hidden_size=params_lstm["h_size"], out_size=2, layers=params_lstm["l_num"], window_size=params_lstm["window_size"]).to(device)
+
+    model_tcn = OR_TCN(input_size=4, hidden_size=params_lstm["h_size"], out_size=2, layers=params_lstm["l_num"], window_size=params_lstm["window_size"]).to(device)
+    
     # Generate input data (the data is normalized and some timesteps are cut off)
 
     if os.name == "nt":
         path_train_data=r"C:\Users\strasserp\Documents\ventil_lstm\Experiment_Meassurements\Messungen\messdaten_900traj_500steps.csv"
-        path_train_data_festo=r"C:\Users\strasserp\Documents\ventil_lstm\Experiment_Meassurements\Messungen\FESTO_traindata.csv"
     else:
         path_train_data=r"/home/rdpusr/Documents/ventil_lstm/Experiment_Meassurements/Messungen/messdaten_900traj_500steps.csv"
-        path_train_data_festo=r"/home/rdpusr/Documents/ventil_lstm/Experiment_Meassurements/Messungen/FESTO_traindata.csv"
 
 
     #train_data = get_data(path_train_data,num_inits=params_lstm["part_of_data"])
-    train_data_festo = get_data(path_train_data_festo,num_inits=params_lstm["part_of_data"])
+    train_data = get_data(path_train_data,num_inits=params_lstm["part_of_data"])
 
-    #                   !!! 2/3 of the regular training data is dropped!!!
-    #train_data_combined = torch.concatenate([train_data, train_data_festo], dim=0)
-    train_data_combined = train_data_festo
-    print("combined traindata:", train_data_combined.size())
-    train_loader_lstm, test_data = get_dataloader(train_data_combined, params_lstm)
-    #train_loader_lstm, test_data = get_dataloader(get_data(path_train_data,num_inits=params_lstm["part_of_data"]), params_lstm)
+    train_loader_lstm, test_data = get_dataloader(train_data, params_lstm)
 
     average_traj_err_train_lstm = []
 

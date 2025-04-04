@@ -1,0 +1,10 @@
+
+Status : 1 einfaches modell und sonst nur ventil (mit Messungen)
+         ->  Fokus auf OR vs TF
+To Do:
+
+- Welche Daten von Dipl.A. können übernommen werden / Modelle 
+- neue Messungen notwenig? (dauert evt lange)
+- Output error Modelle (Schröder2017) nochmal nachlesen
+- supervised learning : literatur? (The distributional shift problem.. Folien von Mark)
+- Körner Termin?
