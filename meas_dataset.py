@@ -106,6 +106,6 @@ class CustomDataset_mlp(Dataset):
 
         last = inp[-1:,:]
 
-        inp = torch.cat((inp[:,0], inp[:,1], inp[:,2]))
+        inp = torch.cat((inp[:,0], inp[:,1], inp[:,2], inp[:,3]))
         
         return inp, last, label

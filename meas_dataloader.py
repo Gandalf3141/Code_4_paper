@@ -20,7 +20,18 @@ def get_dataloader(input_data, params):
     test_data = input_data[test_inits,:,:]
 
     # dataloader for batching during training
-    train_set = custom_simple_dataset(train_data, window_size=params["window_size"])
-    train_loader = DataLoader(train_set, batch_size=params["batch_size"], pin_memory=True)
+    if "OR" in params["model_flag"]:
+        train_set = custom_simple_dataset(train_data, window_size=params["window_size"])
+        train_loader = DataLoader(train_set, batch_size=params["batch_size"], pin_memory=True)
+    if "LSTM" == params["model_flag"]:
+        train_set = CustomDataset(train_data, window_size=params["window_size"])
+        train_loader = DataLoader(train_set, batch_size=params["batch_size"], pin_memory=True)
+    if "TCN" == params["model_flag"]:
+        train_set = CustomDataset(train_data, window_size=params["window_size"])
+        train_loader = DataLoader(train_set, batch_size=params["batch_size"], pin_memory=True)
+    if "MLP" == params["model_flag"]:
+        train_set = CustomDataset_mlp(train_data, window_size=params["window_size"])
+        train_loader = DataLoader(train_set, batch_size=params["batch_size"], pin_memory=True)
+
 
     return train_loader, test_data

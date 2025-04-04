@@ -3,7 +3,7 @@
 import torch
 from meas_get_data import *
 from meas_NN_classes import *
-from meas_dataloader_fs import *
+from meas_dataset import *
 from meas_test_func_fs import *
 
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
@@ -48,14 +48,6 @@ def plot_results(x, pred, rescale=False, window_size=1, sim_data_index=0):
 
     axs[2].axvline(x=time[window_size], color='black', linestyle='--', label='start of prediction')
     axs[3].axvline(x=time[window_size], color='black', linestyle='--', label='start of prediction')
-
-
-    if sim_data_index >= 0:
-        path_test_data_simulink = r"C:\Users\strasserp\Documents\ventil_lstm\Experiment_Meassurements\Messungen\Messdaten_Simulink_Vergleich.csv"
-        test_data_simulink = get_data(path_test_data_simulink, num_inits=0)
-        #test_data_simulink[id,:,2]
-        axs[2].plot(time, test_data_simulink[sim_data_index,:,2], color="orange", label="pressure_simulink")
-        axs[3].plot(time, test_data_simulink[sim_data_index,:,3], color="orange", label="position_simulink")
 
 
     if rescale:
@@ -134,9 +126,6 @@ def plot_histogramm(error_position : list,
     
     return
 
-# def test(data, model, model_type="lstm", window_size=1 ,display_plots=False,\
-#           numb_of_inits=1, fix_random=True, rescale=False, specific_index=-1, error_histogramm: bool = False):
-
 def test(
     data, 
     model, 
@@ -176,8 +165,6 @@ def test(
     error_position = []
     error_pressure = []
 
-    path_test_data_simulink = r"C:\Users\strasserp\Documents\ventil_lstm\Experiment_Meassurements\Messungen\Messdaten_Simulink_Vergleich.csv"
-    test_data_simulink = get_data(path_test_data_simulink, num_inits=0)
     error_position_simulink = []
     error_pressure_simulink = []
 
@@ -203,10 +190,6 @@ def test(
 
                 error_position.append(loss_fn(pred[window_size:, 2:3], x[0, window_size:, 2:3]).detach().cpu().numpy())
                 error_pressure.append(loss_fn(pred[window_size:, 3:4], x[0, window_size:, 3:4]).detach().cpu().numpy())
-
-            
-                error_position_simulink.append(loss_fn(test_data_simulink[i, window_size:data.size(dim=1), 2:3], x[0, window_size:, 2:3]).detach().cpu().numpy())
-                error_pressure_simulink.append(loss_fn(test_data_simulink[i, window_size:data.size(dim=1), 3:4], x[0, window_size:, 3:4]).detach().cpu().numpy())
 
                 if display_plots:
                     if specific_index>=0:
