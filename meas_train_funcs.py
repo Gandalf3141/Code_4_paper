@@ -8,7 +8,7 @@ from meas_dataloader import *
 
 # train functions
 
-def train_lstm_no_or_derivative(traindataloader, model, optimizer, lr_scheduler):
+def train_lstm_no_or_derivative(traindataloader, model, optimizer, lr_scheduler, use_lr_scheduler=False):
    
     loss_fn = nn.MSELoss()
     model.train()
@@ -34,12 +34,13 @@ def train_lstm_no_or_derivative(traindataloader, model, optimizer, lr_scheduler)
         torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
         optimizer.step()
         total_loss.append(loss.detach().cpu().numpy())
-
-    lr_scheduler.step()
+    
+    if use_lr_scheduler:
+        lr_scheduler.step()
    # return the average error of the next step prediction
     return np.mean(total_loss)
 
-def train_mlp_no_or_derivative(traindataloader, model, optimizer, lr_scheduler):
+def train_mlp_no_or_derivative(traindataloader, model, optimizer, lr_scheduler, use_lr_scheduler=False):
  
     loss_fn = nn.MSELoss()
     model.train()
@@ -65,11 +66,14 @@ def train_mlp_no_or_derivative(traindataloader, model, optimizer, lr_scheduler):
         optimizer.step()
  
         total_loss.append(loss.detach().cpu().numpy())
-    lr_scheduler.step()
+    
+    if use_lr_scheduler:
+        lr_scheduler.step()
+        
    # return the average error of the next step prediction
     return np.mean(total_loss)
 
-def train_tcn_no_or_derivative(traindataloader, model, optimizer, lr_scheduler):
+def train_tcn_no_or_derivative(traindataloader, model, optimizer, lr_scheduler, use_lr_scheduler=False):
  
     loss_fn = nn.MSELoss()
     model.train()
@@ -91,11 +95,12 @@ def train_tcn_no_or_derivative(traindataloader, model, optimizer, lr_scheduler):
         torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
         optimizer.step()
         total_loss.append(loss.detach().cpu().numpy())
- 
-    lr_scheduler.step()
+    
+    if use_lr_scheduler:
+        lr_scheduler.step()
     return np.mean(total_loss)
 
-def train(traindataloader, model, optimizer, lr_scheduler):
+def train(traindataloader, model, optimizer, lr_scheduler, use_lr_scheduler=False):
     
     loss_fn = nn.MSELoss()
     model.train()
@@ -131,8 +136,10 @@ def train(traindataloader, model, optimizer, lr_scheduler):
         torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
         optimizer.step()
         total_loss.append(loss.item())
-
-    lr_scheduler.step()
+    
+    if use_lr_scheduler:
+        lr_scheduler.step()
+    
     return np.mean(total_loss)
 
 

@@ -1,12 +1,9 @@
 # NN Classes used for simulation of the full system
 
-
 import torch
 from torch import nn
 from torch.nn.utils import weight_norm
 #import torchcde
-
-# strg + k + 1/2
 
 #############################################################################################
 ###                  >>>       OR - derivative prediction       <<<                       ###

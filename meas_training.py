@@ -18,7 +18,7 @@ print("this device is available : ", device)
 def main(parameters):
 
     # Configure logging
-    log_file = f"training_{parameters['experiment_number']}.log"
+    log_file = f"training_model_{parameters['model_flag']}_{parameters['experiment_number']}.log"
     filemode = 'a' if os.path.exists(log_file) else 'w'
     logging.basicConfig(filename=log_file, filemode=filemode, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -42,7 +42,7 @@ def main(parameters):
     if os.name == "nt":
         path_train_data=r"C:\Users\StrasserP\Documents\NN_Paper\Code_4_paper\messdaten\messdaten_900traj_500steps.csv"
     else:
-        path_train_data=r"/home/rdpusr/Documents/ventil_lstm/Experiment_Meassurements/Messungen/messdaten_900traj_500steps.csv"
+        path_train_data=r"/home/rdpusr/Documents/NN_Paper/Code_4_paper/messdaten/messdaten_900traj_500steps.csv"
 
 
     #train_data = get_data(path_train_data,num_inits=parameters["part_of_data"])
@@ -53,7 +53,7 @@ def main(parameters):
 
     #optimizer
     optimizer = torch.optim.AdamW(model.parameters(), lr = parameters["learning_rate"])
-    lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max = parameters["T_max"], eta_min=0, last_epoch=-1, verbose='deprecated')
+    lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max = parameters["T_max"], eta_min=0, last_epoch=-1, verbose=False)
 
     if parameters["model_flag"] != model.get_flag():
         print("Parameter list model flag does not match the model flag used!")
@@ -62,10 +62,14 @@ def main(parameters):
     print(f"Starting Training with {model.get_flag()}")
     for e in tqdm(range(parameters["epochs"])):
 
-        train_error = train(train_loader, model, optimizer=optimizer, lr_scheduler=lr_scheduler)
+        train_error = train(train_loader, model, optimizer=optimizer, lr_scheduler=lr_scheduler, use_lr_scheduler=False)
 
         if (e+1) % 50 == 0:
             print(f"({model.get_flag()}) - Training error : ", train_error)
+        
+        if (e+1) % parameters["test_every_epochs"] == 0:
+            test_error = test(data=test_data, model=model, window_size=parameters["window_size"])
+            print(f"({model.get_flag()}) - Testing error : ", test_error)
         
     # Save trained model
     path = f'Trained_networks/modeltype_{model.get_flag()}_expnumb_{parameters["experiment_number"]}.pth'

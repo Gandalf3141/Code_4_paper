@@ -1,10 +1,20 @@
-
-Status : 1 einfaches modell und sonst nur ventil (mit Messungen)
+Fokus : 1 einfaches modell und sonst nur ventil (mit Messungen)
          ->  Fokus auf OR vs TF
-To Do:
 
+*******************************************************************
+To Do: (03.04.2025)
+*******************************************************************
 - Welche Daten von Dipl.A. können übernommen werden / Modelle 
+>>> Trainingsdaten (=Messdaten) / nur OR Lstm wäre als trainiertes Modell auf diesem System vorhanden
+
 - neue Messungen notwenig? (dauert evt lange)
+>>> Nein wenn Training funktioniert
+
 - Output error Modelle (Schröder2017) nochmal nachlesen
+>>>
+
 - supervised learning : literatur? (The distributional shift problem.. Folien von Mark)
+>>> (mit Mark besprochen)
+
 - Körner Termin?
+>>>

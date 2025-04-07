@@ -5,6 +5,7 @@ from meas_get_data import *
 from meas_NN_classes import *
 from meas_dataset import *
 from meas_test_func_fs import *
+import warnings
 
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
 
@@ -75,7 +76,6 @@ def plot_results(x, pred, rescale=False, window_size=1, sim_data_index=0):
     plt.legend()
     plt.show()
 
-
 def plot_histogramm(error_position : list,
                     error_pressure : list,
                     error_position_simulink : list,
@@ -129,7 +129,6 @@ def plot_histogramm(error_position : list,
 def test(
     data, 
     model, 
-    model_type: str = "lstm", 
     window_size: int = 1, 
     display_plots: bool = False, 
     numb_of_inits: int = 1, 
@@ -139,6 +138,8 @@ def test(
     error_histogramm: bool = False
 ) -> float:
 
+    if window_size==1:
+        warnings.warn("Window size 1 is not supported!", UserWarning)
 
     if fix_random:
      np.random.seed(1234)
@@ -171,31 +172,44 @@ def test(
     for i, x in enumerate(data):
 
         with torch.inference_mode():
-            if model_type == "lstm":
-                x=x.to(device)        
-                x = x.view(1,x.size(dim=0), x.size(dim=1))                
-                pred = torch.zeros((timesteps, 4), device=device)
+            
 
-                pred[0:window_size, :] = x[0, 0:window_size, :]
-                pred[:, 0] = x[0, :, 0]
 
-                x_test = x.clone()
-                x_test[:,window_size:,2:] = 0
-                x_test = x_test.to(device)
+            x=x.to(device)        
+            x = x.view(1,x.size(dim=0), x.size(dim=1))                
+            pred = torch.zeros((timesteps, 4), device=device)
 
-                out, _ = model(x_test) 
+            pred[0:window_size, :] = x[0, 0:window_size, :]
+            pred[:, 0] = x[0, :, 0]
+
+            x_test = x.clone()
+            x_test[:,window_size:,2:] = 0
+            x_test = x_test.to(device)
+
+            # note that both OR and regular NNs use the same function during inferece
+            # which is just the forward pass of the OR model
+            if model.get_flag() in ["OR_LSTM", "LSTM"]:
+                out, _ = model(x_test)
+                pred[window_size:,2:] = out
+ 
+            if model.get_flag() in ["OR_MLP", "MLP"]:
+                out = model(x_test)
                 pred[window_size:,2:] = out
 
-                total_loss += loss_fn(pred[window_size:, 2:], x[0, window_size:, 2:]).detach().cpu().numpy()
+            if model.get_flag() in ["OR_TCN", "TCN"]:
+                out = model(x_test.transpose(1,2))
+                pred[window_size:,2:] = out.squeeze(0).transpose(0,1)
+            
+            total_loss += loss_fn(pred[window_size:, 2:], x[0, window_size:, 2:]).detach().cpu().numpy()
 
-                error_position.append(loss_fn(pred[window_size:, 2:3], x[0, window_size:, 2:3]).detach().cpu().numpy())
-                error_pressure.append(loss_fn(pred[window_size:, 3:4], x[0, window_size:, 3:4]).detach().cpu().numpy())
+            error_position.append(loss_fn(pred[window_size:, 2:3], x[0, window_size:, 2:3]).detach().cpu().numpy())
+            error_pressure.append(loss_fn(pred[window_size:, 3:4], x[0, window_size:, 3:4]).detach().cpu().numpy())
 
-                if display_plots:
-                    if specific_index>=0:
-                        plot_results(x, pred, rescale=rescale, window_size=window_size, sim_data_index=specific_index)
-                    else:
-                        plot_results(x, pred, rescale=rescale, window_size=window_size, sim_data_index=ids[i])
+            if display_plots:
+                if specific_index>=0:
+                    plot_results(x, pred, rescale=rescale, window_size=window_size, sim_data_index=specific_index)
+                else:
+                    plot_results(x, pred, rescale=rescale, window_size=window_size, sim_data_index=ids[i])
     
     if error_histogramm:
         
