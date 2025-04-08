@@ -89,7 +89,7 @@ def main(parameters):
 if __name__ == '__main__':
 
     # toggle to test everything with a small amount of data
-    testing_mode = False
+    testing_mode = True
 
     parameter_list = get_model_params(testing_mode)
 
