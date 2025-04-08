@@ -42,8 +42,8 @@ def main(parameters):
     if os.name == "nt":
         path_train_data=r"C:\Users\StrasserP\Documents\NN_Paper\Code_4_paper\messdaten\messdaten_900traj_500steps.csv"
     else:
-        path_train_data=r"/home/rdpusr/Documents/NN_Paper/Code_4_paper/messdaten/messdaten_900traj_500steps.csv"
 
+        path_train_data=r"/home/rdpusr/Documents/Code_4_paper/messdaten/messdaten_900traj_500steps.csv"
 
     #train_data = get_data(path_train_data,num_inits=parameters["part_of_data"])
     train_data = get_data(path_train_data,num_inits=parameters["part_of_data"])
@@ -89,7 +89,7 @@ def main(parameters):
 if __name__ == '__main__':
 
     # toggle to test everything with a small amount of data
-    testing_mode = True
+    testing_mode = False
 
     parameter_list = get_model_params(testing_mode)
 
