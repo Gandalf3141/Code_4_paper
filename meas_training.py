@@ -92,10 +92,11 @@ if __name__ == '__main__':
     testing_mode = True
 
     parameter_list = get_model_params(testing_mode)
-
+    
     seems_to_work = []#["OR_LSTM", "OR_MLP", "OR_TCN", "LSTM", "MLP", "TCN"]
 
     for parameters in parameter_list:
         if parameters["model_flag"] in seems_to_work:
             continue
         main(parameters)
+        
