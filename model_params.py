@@ -16,7 +16,7 @@ def get_model_params(testing_mode=True):
                         "percentage_of_data" : 0.8,
                         "cut_off_timesteps" : 0,
                         "part_of_data" : 0,
-                        "epochs" : 4000,
+                        "epochs" : 2000,
                         "test_every_epochs" : 2,
                         "T_max" : 1000,
 
@@ -27,13 +27,13 @@ def get_model_params(testing_mode=True):
                         "model_flag" : "OR_MLP",
                         "window_size" : 20,
                         "h_size" : 8,
-                        "l_num" : 4,
+                        "l_num" : 3,
                         "learning_rate" : 0.001,
                         "batch_size" : 80,
                         "percentage_of_data" : 0.8,
                         "cut_off_timesteps" : 0,
                         "part_of_data" : 0,
-                        "epochs" : 3000,
+                        "epochs" : 2000,
                         "test_every_epochs" : 2,
                         "T_max" : 1000,
                         "experiment_number" : np.random.randint(0,1000)
@@ -42,9 +42,12 @@ def get_model_params(testing_mode=True):
     
     parameters_or_tcn =    {
                         "model_flag" : "OR_TCN",
-                        "window_size" : 100,
-                        "h_size" : 8,
+                        "window_size" : 30,
+                        "n_hidden" : 5,
+                        "levels" : 4,
+                        "kernel_size" : 7,
                         "l_num" : 3,
+                        "dropout" : 0,
                         "learning_rate" : 0.001,
                         "batch_size" : 30,
                         "percentage_of_data" : 0.8,
@@ -66,11 +69,12 @@ def get_model_params(testing_mode=True):
     # amount of data used should be constant across all networks
     for i, parameters in enumerate(param_list):
 
-        parameters["percentage_of_data"]  = 0.9
-        parameters["cut_off_timesteps"]  = 0
+        parameters["percentage_of_data"]  = 0.5
+        parameters["cut_off_timesteps"]  = 200
         parameters["part_of_data"]  = 0
-        parameters["epochs"]  = 4000
-        parameters["test_every_epochs"]  = 400
+        parameters["epochs"]  = 100
+        parameters["T_max"] =  int(parameters["epochs"] / 2)
+        parameters["test_every_epochs"]  = 50
         parameters["experiment_number"]  = np.random.randint(0,1000)
 
     if testing_mode:
