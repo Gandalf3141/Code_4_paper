@@ -108,7 +108,6 @@ def get_model_params(testing_mode=True):
                         "cut_off_timesteps" : 0,
                         "part_of_data" : 0,
                         "epochs" : 3000,
-                        "test_every_epochs" : 2,
                         "T_max" : 4000,
                         "experiment_number" : np.random.randint(0,1000)
                         
