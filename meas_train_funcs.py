@@ -13,6 +13,7 @@ def train_lstm_no_or_derivative(traindataloader, model, optimizer, lr_scheduler,
     loss_fn = nn.MSELoss()
     model.train()
     total_loss = []
+    device = next(model.parameters()).device
 
     for k, (inp, label) in enumerate(traindataloader):  # inp = (u, x) label = x
 
@@ -45,6 +46,7 @@ def train_mlp_no_or_derivative(traindataloader, model, optimizer, lr_scheduler, 
     loss_fn = nn.MSELoss()
     model.train()
     total_loss = []
+    device = next(model.parameters()).device
   
     for k, (x, x_last, y) in enumerate(traindataloader):  # inp = (u, x) label = x
         
@@ -78,6 +80,7 @@ def train_tcn_no_or_derivative(traindataloader, model, optimizer, lr_scheduler, 
     loss_fn = nn.MSELoss()
     model.train()
     total_loss = []
+    device = next(model.parameters()).device
   
     for k, (x,y) in enumerate(traindataloader):  # inp = (u, x) label = x
         
@@ -105,6 +108,7 @@ def train(traindataloader, model, optimizer, lr_scheduler, use_lr_scheduler=Fals
     loss_fn = nn.MSELoss()
     model.train()
     total_loss = []
+    device = next(model.parameters()).device
 
     if model.get_flag() == "LSTM":
         return train_lstm_no_or_derivative(traindataloader, model, optimizer, lr_scheduler)

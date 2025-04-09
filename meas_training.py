@@ -12,6 +12,7 @@ from model_params import get_model_params
 
 torch.set_default_dtype(torch.float64)
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
+#device="cpu"
 print("this device is available : ", device)
 
 
@@ -93,10 +94,10 @@ if __name__ == '__main__':
 
     parameter_list = get_model_params(testing_mode)
     
-    seems_to_work = []#["OR_LSTM", "OR_MLP", "OR_TCN", "LSTM", "MLP", "TCN"]
+    list_of_NNs_to_train = ["OR_TCN", "LSTM", "MLP", "TCN"]# ["OR_LSTM", "OR_MLP", "OR_TCN", "LSTM", "MLP", "TCN"]
 
     for parameters in parameter_list:
-        if parameters["model_flag"] in seems_to_work:
+        if parameters["model_flag"] not in list_of_NNs_to_train:
             continue
         main(parameters)
         
