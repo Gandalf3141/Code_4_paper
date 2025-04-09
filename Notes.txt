@@ -12,3 +12,58 @@ Ziel wäre eine einfache Aufteilung:
 - test/visualize results
 
 >>> möglichst kompakt halten!
+
+*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~
+Literatur 
+*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~
+
+1) https://doi.org/10.1016/j.ijnonlinmec.2022.103984
+
+OR-LSTM wird vorgestellt und an dynamischen System mit Eingang getestet.
+
+2) https://doi.org/10.1016/j.chaos.2020.110045
+
+OR-LSTM und 'OR'-MLP werden anhand chaotischer Systeme verglichen. (synthetische Daten)
+hier heißt OR = no Teacher-Forcing (wieso wird MLP nicht auch so trainiert?) 
+
+3) https://doi.org/10.1016/j.chaos.2021.111570
+
+Fortsetzung zu 2)
+no-TF und TF LSTMs werden verglichen. Es werden chaotic timeseries Daten verwendet (auch mit echten Daten)
+
+4) https://ieeexplore.ieee.org/document/80202   //    10.1109/72.80202
+
+Aus 1990 - System Identification mit Neuronalen Netzen 'parallel identification' entspricht ca. OR Ansatz
+Siehe Fig.11 sowie Example 3.
+Unklar wieso hier immer y(k+1) = y(k)+NN(u(k)) // NN(y(k)) + u(k) / etc. statt NN(y,u) betrachten wird.. (Wissen über Struktur des Systems genutzt?)
+
+5) https://link.springer.com/article/10.1140/epjp/s13360-024-05056-8
+
+Anwendung von OR-LSTM (aber ohne u(t) )
+
+6) Intelligente Verfahren Schröder 2017
+
+S. 251. Time Delay-NN mit der NOE-Struktur trainiert entspricht OR-MLP 
+
+7) https://doi.org/10.48550/arXiv.2206.03305
+
+PINN-TCN wird verwendet um Quadrotor dynamics zu lernen aber auf Teacher-Forcing/OR wird nicht eingegangen
+Genauer wird ein wird ein Encoder-Decoder setup verwendet mit TCN und MLP (siehe Figure 2) 
+
+8) https://doi.org/10.48550/arXiv.1803.01271
+
+paper das TCN einführt 
+
+9) https://doi.org/10.48550/arXiv.1909.01730
+
+Hier wird TCN / LSTM etc anhand des Silverbox Datasets getested es wird von Free Run simulation gesprochen und von one step ahead prediction
+.. wenn Free run simulation im Training verwendet wurde wäre das schlecht.. ist für mich aber nicht wirklich aus dem Paper rauszulesen..
+
+10) https://doi.org/10.1145/3567591
+
+schöner Übersichts Artikel für Simulation von dyn. Sys. mit NNs 
+aber Teacher Forcing / OR etc. wird nicht erwähnt? Onestep prediction scheint hier die Norm zu sein.
+
+
+*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~
+*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~
