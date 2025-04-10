@@ -5,7 +5,7 @@ import numpy as np
 # We take parameters that worked for other training runs..
 # the big difference between OR and TF models is the batch size!
 
-def get_model_params(testing_mode=True):
+def get_model_params(testing_mode=True, params_specific=""):
     parameters_or_lstm =    {
                         "model_flag" : "OR_LSTM",
                         "window_size" : 16,
@@ -126,6 +126,9 @@ def get_model_params(testing_mode=True):
         parameters["test_every_epochs"]  = int(parameters["epochs"]/4)
         parameters["experiment_number"]  = np.random.randint(0,1000)
 
+        if params_specific == parameters["model_flag"]:
+            return [parameters]
+        
     if testing_mode:
             
         parameters_or_lstm =    {

@@ -55,7 +55,7 @@ weitere Daten:
 Micro Gas Turbine Electrical Energy Prediction
 https://archive.ics.uci.edu/dataset/994/micro+gas+turbine+electrical+energy+prediction
 
-Silver Fox Dataset!!!
+Silver Box Dataset!!!
 
 DaISy (ziemlich alt)
 https://homes.esat.kuleuven.be/~smc/daisy/daisydata.html

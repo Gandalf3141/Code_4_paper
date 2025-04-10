@@ -64,6 +64,16 @@ Hier wird TCN / LSTM etc anhand des Silverbox Datasets getested es wird von Free
 schöner Übersichts Artikel für Simulation von dyn. Sys. mit NNs 
 aber Teacher Forcing / OR etc. wird nicht erwähnt? Onestep prediction scheint hier die Norm zu sein.
 
+11) https://doi.org/10.1016/j.neucom.2018.07.071
+
+ein paper über die unterschiede zwischen parallel und series parallel training (also quasi TF vs no TF)
+Resultat: es ist nicht immer klar was besser ist.
+
+12) "Z:\tausch\StrasserP\MT_Strasser_publication\PHD_Thesis.pdf"
+    Learning nonlinear differentiable models for signals and systems: with applications
+
+Doktor Arbeit die genau das macht was wir machen wollen.. sogar am Silverbox Dataset :D ... :(
+
 
 *~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~
 *~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~

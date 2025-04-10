@@ -1,0 +1,48 @@
+2025-04-10 13:52:20,660 - INFO - hyperparams (modeltype_OR_LSTM_expnumb_306) : {'model_flag': 'OR_LSTM', 'window_size': 16, 'h_size': 8, 'l_num': 3, 'learning_rate': 0.001, 'batch_size': 5, 'percentage_of_data': 0.1, 'cut_off_timesteps': 100, 'part_of_data': 50, 'epochs': 5, 'test_every_epochs': 2, 'T_max': 5, 'experiment_number': 306}
+2025-04-10 13:52:20,660 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-10 13:52:20,660 - INFO - 
+
+2025-04-10 13:53:20,016 - INFO - hyperparams (modeltype_OR_LSTM_expnumb_306) : {'model_flag': 'OR_LSTM', 'window_size': 16, 'h_size': 8, 'l_num': 3, 'learning_rate': 0.001, 'batch_size': 5, 'percentage_of_data': 0.1, 'cut_off_timesteps': 100, 'part_of_data': 50, 'epochs': 5, 'test_every_epochs': 2, 'T_max': 5, 'experiment_number': 306}
+2025-04-10 13:53:20,017 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-10 13:53:20,017 - INFO - 
+
+2025-04-10 13:53:27,590 - INFO - hyperparams (modeltype_OR_MLP_expnumb_28) : {'model_flag': 'OR_MLP', 'window_size': 20, 'h_size': 24, 'l_num': 3, 'learning_rate': 0.001, 'batch_size': 20, 'percentage_of_data': 0.1, 'cut_off_timesteps': 100, 'part_of_data': 50, 'epochs': 5, 'test_every_epochs': 2, 'T_max': 5, 'experiment_number': 28}
+2025-04-10 13:53:27,590 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-10 13:53:27,590 - INFO - 
+
+2025-04-10 13:53:35,411 - INFO - hyperparams (modeltype_OR_MLP_expnumb_28) : {'model_flag': 'OR_MLP', 'window_size': 20, 'h_size': 24, 'l_num': 3, 'learning_rate': 0.001, 'batch_size': 20, 'percentage_of_data': 0.1, 'cut_off_timesteps': 100, 'part_of_data': 50, 'epochs': 5, 'test_every_epochs': 2, 'T_max': 5, 'experiment_number': 28}
+2025-04-10 13:53:35,411 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-10 13:53:35,411 - INFO - 
+
+2025-04-10 13:54:19,572 - INFO - hyperparams (modeltype_OR_TCN_expnumb_953) : {'model_flag': 'OR_TCN', 'window_size': 30, 'h_size': 8, 'n_hidden': 5, 'levels': 4, 'kernel_size': 7, 'l_num': 3, 'dropout': 0, 'learning_rate': 0.001, 'batch_size': 20, 'percentage_of_data': 0.1, 'cut_off_timesteps': 100, 'part_of_data': 50, 'epochs': 5, 'test_every_epochs': 2, 'T_max': 5, 'experiment_number': 953}
+2025-04-10 13:54:19,572 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-10 13:54:19,572 - INFO - 
+
+2025-04-10 13:55:05,845 - INFO - hyperparams (modeltype_OR_TCN_expnumb_953) : {'model_flag': 'OR_TCN', 'window_size': 30, 'h_size': 8, 'n_hidden': 5, 'levels': 4, 'kernel_size': 7, 'l_num': 3, 'dropout': 0, 'learning_rate': 0.001, 'batch_size': 20, 'percentage_of_data': 0.1, 'cut_off_timesteps': 100, 'part_of_data': 50, 'epochs': 5, 'test_every_epochs': 2, 'T_max': 5, 'experiment_number': 953}
+2025-04-10 13:55:05,845 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-10 13:55:05,845 - INFO - 
+
+2025-04-10 13:55:56,441 - INFO - hyperparams (modeltype_LSTM_expnumb_652) : {'model_flag': 'LSTM', 'window_size': 16, 'h_size': 8, 'l_num': 3, 'learning_rate': 0.001, 'batch_size': 100, 'percentage_of_data': 0.1, 'cut_off_timesteps': 100, 'part_of_data': 50, 'epochs': 5, 'test_every_epochs': 2, 'T_max': 5, 'experiment_number': 652}
+2025-04-10 13:55:56,441 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-10 13:55:56,441 - INFO - 
+
+2025-04-10 13:56:40,373 - INFO - hyperparams (modeltype_LSTM_expnumb_652) : {'model_flag': 'LSTM', 'window_size': 16, 'h_size': 8, 'l_num': 3, 'learning_rate': 0.001, 'batch_size': 100, 'percentage_of_data': 0.1, 'cut_off_timesteps': 100, 'part_of_data': 50, 'epochs': 5, 'test_every_epochs': 2, 'T_max': 5, 'experiment_number': 652}
+2025-04-10 13:56:40,373 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-10 13:56:40,373 - INFO - 
+
+2025-04-10 13:56:45,954 - INFO - hyperparams (modeltype_MLP_expnumb_66) : {'model_flag': 'MLP', 'window_size': 20, 'h_size': 24, 'l_num': 3, 'learning_rate': 0.001, 'batch_size': 100, 'percentage_of_data': 0.1, 'cut_off_timesteps': 100, 'part_of_data': 50, 'epochs': 5, 'test_every_epochs': 2, 'T_max': 5, 'experiment_number': 66}
+2025-04-10 13:56:45,954 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-10 13:56:45,954 - INFO - 
+
+2025-04-10 13:56:51,538 - INFO - hyperparams (modeltype_MLP_expnumb_66) : {'model_flag': 'MLP', 'window_size': 20, 'h_size': 24, 'l_num': 3, 'learning_rate': 0.001, 'batch_size': 100, 'percentage_of_data': 0.1, 'cut_off_timesteps': 100, 'part_of_data': 50, 'epochs': 5, 'test_every_epochs': 2, 'T_max': 5, 'experiment_number': 66}
+2025-04-10 13:56:51,538 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-10 13:56:51,538 - INFO - 
+
+2025-04-10 13:57:32,828 - INFO - hyperparams (modeltype_TCN_expnumb_262) : {'model_flag': 'TCN', 'window_size': 30, 'h_size': 8, 'n_hidden': 5, 'levels': 4, 'kernel_size': 7, 'l_num': 3, 'dropout': 0, 'learning_rate': 0.001, 'batch_size': 100, 'percentage_of_data': 0.1, 'cut_off_timesteps': 100, 'part_of_data': 50, 'epochs': 5, 'test_every_epochs': 2, 'T_max': 5, 'experiment_number': 262}
+2025-04-10 13:57:32,828 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-10 13:57:32,828 - INFO - 
+
+2025-04-10 13:58:14,259 - INFO - hyperparams (modeltype_TCN_expnumb_262) : {'model_flag': 'TCN', 'window_size': 30, 'h_size': 8, 'n_hidden': 5, 'levels': 4, 'kernel_size': 7, 'l_num': 3, 'dropout': 0, 'learning_rate': 0.001, 'batch_size': 100, 'percentage_of_data': 0.1, 'cut_off_timesteps': 100, 'part_of_data': 50, 'epochs': 5, 'test_every_epochs': 2, 'T_max': 5, 'experiment_number': 262}
+2025-04-10 13:58:14,259 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-10 13:58:14,259 - INFO - 
+
