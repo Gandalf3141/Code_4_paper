@@ -15,15 +15,6 @@ device = "cuda:0" if torch.cuda.is_available() else "cpu"
 #device="cpu"
 print("this device is available : ", device)
 
-def save_model_with_versioning(model, base_path):
-    version = 1
-    save_path = base_path
-    while os.path.exists(save_path):
-        version += 1
-        save_path = f"{base_path.rsplit('.', 1)[0]}_v{version}.pth"
-
-    print(f"Model saved at: {save_path}")
-    return save_path
 
 def main(parameters):
 
@@ -82,9 +73,9 @@ def main(parameters):
             print(f"({model.get_flag()}) - Testing error : ", test_error)
         
     # Save trained model
-    path = f'Trained_networks/modeltype_{model.get_flag()}.pth'
-    torch.save(model.state_dict(), save_model_with_versioning(model, path))
+    path = f'Trained_networks/modeltype_{model.get_flag()}_expnumb_{parameters["experiment_number"]}.pth'
 
+    torch.save(model.state_dict(), path)
 
     print(f"Run finished!")
     print(path)
@@ -103,11 +94,10 @@ if __name__ == '__main__':
 
     parameter_list = get_model_params(testing_mode)
     
-    list_of_NNs_to_train =  ["OR_LSTM", "OR_MLP", "OR_TCN", "LSTM", "MLP", "TCN"]# ["OR_LSTM", "OR_MLP", "OR_TCN", "LSTM", "MLP", "TCN"]
+    list_of_NNs_to_train = ["OR_LSTM", "OR_MLP", "OR_TCN", "LSTM", "MLP", "TCN"]# ["OR_LSTM", "OR_MLP", "OR_TCN", "LSTM", "MLP", "TCN"]
 
     for parameters in parameter_list:
         if parameters["model_flag"] not in list_of_NNs_to_train:
             continue
         main(parameters)
-        
         
