@@ -109,5 +109,3 @@ if __name__ == '__main__':
         if parameters["model_flag"] not in list_of_NNs_to_train:
             continue
         main(parameters)
-        
-        
