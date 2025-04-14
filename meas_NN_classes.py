@@ -31,6 +31,10 @@ class OR_LSTM(nn.Module):
 
     def forward(self, one_full_traj):
 
+        
+        #init out
+        out = torch.zeros(one_full_traj.size(0), one_full_traj.size(1), 2, device=one_full_traj.device)
+
         seq = one_full_traj[:, 0:self.ws, :]
         lstm_out, hidden = self.lstm(seq)           
         pred = self.linear(lstm_out)
@@ -109,6 +113,9 @@ class OR_MLP(nn.Module):
         return self.flag
     
     def forward(self, one_full_traj):
+
+                #init out
+        out = torch.zeros(one_full_traj.size(0), one_full_traj.size(1), 2, device=one_full_traj.device)
         
         seq = one_full_traj[:, 0:self.ws, :]
 
@@ -170,7 +177,8 @@ class OR_TCN(nn.Module):
 
     def forward(self, one_full_traj):
 
-        
+        #init out
+        out = torch.zeros(one_full_traj.size(0), one_full_traj.size(1), 2, device=one_full_traj.device)
         # war falsch ! (hat trotzdem funktioniert???)
         #seq = one_full_traj[:, 0:self.ws, :]
         seq = one_full_traj[:, :, 0:self.ws]
@@ -242,6 +250,10 @@ class OR_RNN(nn.Module):
         return self.flag
 
     def forward(self, one_full_traj):
+
+                #init out
+        out = torch.zeros(one_full_traj.size(0), one_full_traj.size(1), 2, device=one_full_traj.device)
+
         seq = one_full_traj[:, 0:self.ws, :]
         rnn_out, hidden = self.rnn(seq)           
         pred = self.linear(rnn_out)
@@ -291,6 +303,10 @@ class OR_GRU(nn.Module):
         return self.flag
 
     def forward(self, one_full_traj):
+        
+                #init out
+        out = torch.zeros(one_full_traj.size(0), one_full_traj.size(1), 2, device=one_full_traj.device)
+
         seq = one_full_traj[:, 0:self.ws, :]
         gru_out, hidden = self.gru(seq)           
         pred = self.linear(gru_out)

@@ -207,7 +207,7 @@ def get_model_params(testing_mode=True, params_specific=""):
         for parameters in param_list:
 
             parameters["percentage_of_data"]  = 0.1
-            parameters["cut_off_timesteps"]  = 100
+            parameters["cut_off_timesteps"]  = 200
             parameters["part_of_data"]  = 50
             parameters["epochs"]  = 5
             parameters["test_every_epochs"]  = 2
