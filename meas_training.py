@@ -76,6 +76,7 @@ def main(parameters):
 
     #Training loop
     print(f"Starting Training with {model.get_flag()}")
+    test_error=0 # test error 0 until first test with testdata is done
     for e in tqdm(range(parameters["epochs"])):
 
         train_error = train(train_loader, model, optimizer=optimizer, lr_scheduler=lr_scheduler, use_lr_scheduler=False)
@@ -87,13 +88,13 @@ def main(parameters):
             test_error = test(data=test_data, model=model, window_size=parameters["window_size"])
             print(f"({model.get_flag()}) - Testing error : ", test_error)
 
-        if (e+1) % parameters["test_every_epochs"] == 0:
-            error_dic[model.get_flag() + "_test_err"].append(test_error)
-            error_dic[model.get_flag() + "_train_err"].append(train_error)
+        
+        error_dic[model.get_flag() + "_test_err"].append(test_error)
+        error_dic[model.get_flag() + "_train_err"].append(train_error)
         
     # Save trained model
     path = f'Trained_networks/modeltype_{model.get_flag()}.pth'
-    torch.save(model.state_dict(), save_model_with_versioning(model, path))
+    torch.save(model.state_dict(), save_model_with_versioning(path))
 
 
     print(f"Run finished!")
@@ -123,12 +124,19 @@ if __name__ == '__main__':
 
         main(parameters)
 
-
+    #save errors as csv
     max_length = max(len(v) for v in error_dic.values())
     for key, value in error_dic.items():
         if len(value) < max_length:
             error_dic[key] = value + [0] * (max_length - len(value))
 
+    base_path = "train_test_errors.csv"
+    save_path = base_path
+    version = 0
+    while os.path.exists(save_path):
+        version += 1
+        save_path = f"{base_path.rsplit('.', 1)[0]}_v{version}.csv"
+
     df = pd.DataFrame(error_dic)
-    df.to_csv(save_model_with_versioning(path="train_test_errors.csv"), index=False)
+    df.to_csv(save_path, index=False)
     print("errors saved")

@@ -188,12 +188,12 @@ def get_model_params(testing_mode=True, params_specific=""):
     # amount of data used should be constant across all networks
     for parameters in param_list:
 
-        parameters["percentage_of_data"]  = 0.8
-        parameters["cut_off_timesteps"]  = 100
+        parameters["percentage_of_data"]  = 0.7
+        parameters["cut_off_timesteps"]  = 200
         parameters["part_of_data"]  = 0
-        parameters["epochs"]  = 1000
+        parameters["epochs"]  = 2000
         parameters["T_max"] =  int(parameters["epochs"] / 2)
-        parameters["test_every_epochs"]  = int(parameters["epochs"]/4)
+        parameters["test_every_epochs"]  = int(parameters["epochs"]/10)
         parameters["experiment_number"]  = np.random.randint(0,1000)
 
         if params_specific == parameters["model_flag"]:
