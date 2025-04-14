@@ -47,7 +47,15 @@ def main(parameters):
         num_channels = [parameters["n_hidden"]] * parameters["levels"]
         model = OR_TCN(input_size=4, output_size=2, num_channels=num_channels,
                         kernel_size=parameters["kernel_size"], dropout=parameters["dropout"], windowsize=parameters["window_size"], flag=parameters["model_flag"]).to(device)
-    
+
+    if "RNN" in parameters["model_flag"]:
+        model = OR_RNN(input_size=4, hidden_size=parameters["h_size"], out_size=2, 
+                        layers=parameters["l_num"], window_size=parameters["window_size"], flag=parameters["model_flag"]).to(device)
+        
+    if "GRU" in parameters["model_flag"]:
+        model = OR_GRU(input_size=4, hidden_size=parameters["h_size"], out_size=2, 
+                        layers=parameters["l_num"], window_size=parameters["window_size"], flag=parameters["model_flag"]).to(device)
+
     # Generate input data (the data is normalized and some timesteps are cut off)
     if os.name == "nt":
         path_train_data=r"C:\Users\StrasserP\Documents\NN_Paper\Code_4_paper\messdaten\messdaten_900traj_500steps.csv"
@@ -55,11 +63,8 @@ def main(parameters):
 
         path_train_data=r"/home/rdpusr/Documents/Code_4_paper/messdaten/messdaten_900traj_500steps.csv"
 
-    #train_data = get_data(path_train_data,num_inits=parameters["part_of_data"])
     train_data = get_data(path_train_data,num_inits=parameters["part_of_data"])
     train_loader, test_data = get_dataloader(train_data, parameters)
-
-    #average_traj_err_train_lstm = []
 
     #optimizer
     optimizer = torch.optim.AdamW(model.parameters(), lr = parameters["learning_rate"])
@@ -103,7 +108,7 @@ if __name__ == '__main__':
 
     parameter_list = get_model_params(testing_mode)
     
-    list_of_NNs_to_train =  ["OR_LSTM", "OR_MLP", "OR_TCN", "LSTM", "MLP", "TCN"]# ["OR_LSTM", "OR_MLP", "OR_TCN", "LSTM", "MLP", "TCN"]
+    list_of_NNs_to_train =  ["OR_RNN", "OR_GRU", "RNN", "GRU"]# ["OR_LSTM", "OR_MLP", "OR_TCN", "OR_RNN", "OR_GRU", "LSTM", "MLP", "TCN", "RNN", "GRU"]
 
     for parameters in parameter_list:
         if parameters["model_flag"] not in list_of_NNs_to_train:

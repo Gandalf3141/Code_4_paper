@@ -23,7 +23,7 @@ def get_dataloader(input_data, params):
     if "OR" in params["model_flag"]:
         train_set = custom_simple_dataset(train_data, window_size=params["window_size"])
         train_loader = DataLoader(train_set, batch_size=params["batch_size"], pin_memory=True)
-    if "LSTM" == params["model_flag"]:
+    if  params["model_flag"] in ["LSTM", "RNN", "GRU"]:
         train_set = CustomDataset(train_data, window_size=params["window_size"])
         train_loader = DataLoader(train_set, batch_size=params["batch_size"], pin_memory=True)
     if "TCN" == params["model_flag"]:

@@ -221,8 +221,106 @@ class OR_TCN(nn.Module):
 
         return pred
 
+# OR - RNN
+class OR_RNN(nn.Module):
 
-# not clear yet if net step prediction models will be used.
+    def __init__(self, input_size, hidden_size, out_size, layers, window_size=4, flag="OR_RNN"):
+        super().__init__()
+
+        self.hidden_size = hidden_size
+        self.input_size = input_size
+        self.ws = window_size
+        self.flag = flag
+        
+        # Define RNN layer
+        self.rnn = nn.RNN(input_size, hidden_size, num_layers=layers, batch_first=True)
+
+        # Define linear layer
+        self.linear = nn.Linear(hidden_size, out_size)
+
+    def get_flag(self):
+        return self.flag
+
+    def forward(self, one_full_traj):
+        seq = one_full_traj[:, 0:self.ws, :]
+        rnn_out, hidden = self.rnn(seq)           
+        pred = self.linear(rnn_out)
+        # Only update next step
+        out = one_full_traj[:, self.ws-1:self.ws, 2:] + pred[:, -1:, :]
+
+        for t in range(1, self.ws):
+            tmp = torch.cat((one_full_traj[:, self.ws+(t-1):self.ws+(t-1)+(out.size(dim=1)), 0:2], out[:, :, :]), dim=2)
+            seq = torch.cat((one_full_traj[:, t:self.ws, :], tmp), dim=1)
+
+            rnn_out, hidden = self.rnn(seq)           
+            pred = self.linear(rnn_out)
+            out = torch.cat((out, out[:, -1:, :] + pred[:, -1:, :]), dim=1)
+            
+        for t in range(self.ws, one_full_traj.size(dim=1) - self.ws):
+            seq = torch.cat((one_full_traj[:, t:t+self.ws, 0:2], out[:, t-self.ws:t, :]), dim=2)
+            rnn_out, hidden = self.rnn(seq)           
+            pred = self.linear(rnn_out)
+            out = torch.cat((out, out[:, t-1:t, :] + pred[:, -1:, :]), dim=1)
+
+        return out, hidden
+
+    def simple_forward(self, seq):
+        rnn_out, hidden = self.rnn(seq)           
+        pred = self.linear(rnn_out)
+        return pred, hidden
+
+
+# OR - GRU
+class OR_GRU(nn.Module):
+
+    def __init__(self, input_size, hidden_size, out_size, layers, window_size=4, flag="OR_GRU"):
+        super().__init__()
+
+        self.hidden_size = hidden_size
+        self.input_size = input_size
+        self.ws = window_size
+        self.flag = flag
+        
+        # Define GRU layer
+        self.gru = nn.GRU(input_size, hidden_size, num_layers=layers, batch_first=True)
+
+        # Define linear layer
+        self.linear = nn.Linear(hidden_size, out_size)
+
+    def get_flag(self):
+        return self.flag
+
+    def forward(self, one_full_traj):
+        seq = one_full_traj[:, 0:self.ws, :]
+        gru_out, hidden = self.gru(seq)           
+        pred = self.linear(gru_out)
+        # Only update next step
+        out = one_full_traj[:, self.ws-1:self.ws, 2:] + pred[:, -1:, :]
+
+        for t in range(1, self.ws):
+            tmp = torch.cat((one_full_traj[:, self.ws+(t-1):self.ws+(t-1)+(out.size(dim=1)), 0:2], out[:, :, :]), dim=2)
+            seq = torch.cat((one_full_traj[:, t:self.ws, :], tmp), dim=1)
+
+            gru_out, hidden = self.gru(seq)           
+            pred = self.linear(gru_out)
+            out = torch.cat((out, out[:, -1:, :] + pred[:, -1:, :]), dim=1)
+            
+        for t in range(self.ws, one_full_traj.size(dim=1) - self.ws):
+            seq = torch.cat((one_full_traj[:, t:t+self.ws, 0:2], out[:, t-self.ws:t, :]), dim=2)
+            gru_out, hidden = self.gru(seq)           
+            pred = self.linear(gru_out)
+            out = torch.cat((out, out[:, t-1:t, :] + pred[:, -1:, :]), dim=1)
+
+        return out, hidden
+
+    def simple_forward(self, seq):
+        gru_out, hidden = self.gru(seq)           
+        pred = self.linear(gru_out)
+        return pred, hidden
+
+
+
+# not clear yet if net step prediction models will be used. 
 
 #############################################################################################
 ###           >>>       OR - next step prediction       <<<                               ###
