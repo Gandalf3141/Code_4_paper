@@ -110,7 +110,7 @@ def train(traindataloader, model, optimizer, lr_scheduler, use_lr_scheduler=Fals
     total_loss = []
     device = next(model.parameters()).device
 
-    if model.get_flag() == "LSTM":
+    if model.get_flag() in ["LSTM", "RNN", "GRU"]:
         return train_lstm_no_or_derivative(traindataloader, model, optimizer, lr_scheduler)
     if model.get_flag() == "MLP":
         return train_mlp_no_or_derivative(traindataloader, model, optimizer, lr_scheduler)
@@ -122,7 +122,7 @@ def train(traindataloader, model, optimizer, lr_scheduler, use_lr_scheduler=Fals
         x = x.to(device)
         y = y.to(device)
 
-        if model.get_flag() == "OR_LSTM":
+        if model.get_flag() in ["OR_LSTM", "OR_RNN", "OR_GRU"]:
             output, _ = model(x)
         if model.get_flag() == "OR_MLP":
             output = model(x)
@@ -133,8 +133,20 @@ def train(traindataloader, model, optimizer, lr_scheduler, use_lr_scheduler=Fals
 
         optimizer.zero_grad(set_to_none=True)
         
+        # physics loss: 
+        # rescale data first?
+        # how to calc s'' and p' fast? 
+
+        # s, p rescale to original units
+        # s' = s.autodiff()...
+
+        # s'' = 1/m (A (p - p_0)- c (s - s_0) + f_r(v) + f_k(s,v))
+        # p' = k/V(s) (-A v p + R_s T_0 (\rho_0 (Q_NC - Q_NO)))
+        # simple physics loss:
+        # 0 = 1/m (A (p - p_0)- c (s - s_0)
+
         # calculate the error
-        loss = loss_fn(output, y)
+        loss = loss_fn(output, y) # + lambda * loss_physics
 
         loss.backward()
         torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)

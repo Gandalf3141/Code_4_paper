@@ -9,13 +9,14 @@ from meas_test_func_fs import *
 from meas_dataloader import *
 from meas_train_funcs import *
 from model_params import get_model_params
+import pandas as pd
 
 torch.set_default_dtype(torch.float64)
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
 #device="cpu"
 print("this device is available : ", device)
 
-def save_model_with_versioning(model, base_path):
+def save_model_with_versioning(base_path):
     version = 1
     save_path = base_path
     while os.path.exists(save_path):
@@ -47,7 +48,15 @@ def main(parameters):
         num_channels = [parameters["n_hidden"]] * parameters["levels"]
         model = OR_TCN(input_size=4, output_size=2, num_channels=num_channels,
                         kernel_size=parameters["kernel_size"], dropout=parameters["dropout"], windowsize=parameters["window_size"], flag=parameters["model_flag"]).to(device)
-    
+
+    if "RNN" in parameters["model_flag"]:
+        model = OR_RNN(input_size=4, hidden_size=parameters["h_size"], out_size=2, 
+                        layers=parameters["l_num"], window_size=parameters["window_size"], flag=parameters["model_flag"]).to(device)
+        
+    if "GRU" in parameters["model_flag"]:
+        model = OR_GRU(input_size=4, hidden_size=parameters["h_size"], out_size=2, 
+                        layers=parameters["l_num"], window_size=parameters["window_size"], flag=parameters["model_flag"]).to(device)
+
     # Generate input data (the data is normalized and some timesteps are cut off)
     if os.name == "nt":
         path_train_data=r"C:\Users\StrasserP\Documents\NN_Paper\Code_4_paper\messdaten\messdaten_900traj_500steps.csv"
@@ -55,11 +64,8 @@ def main(parameters):
 
         path_train_data=r"/home/rdpusr/Documents/Code_4_paper/messdaten/messdaten_900traj_500steps.csv"
 
-    #train_data = get_data(path_train_data,num_inits=parameters["part_of_data"])
     train_data = get_data(path_train_data,num_inits=parameters["part_of_data"])
     train_loader, test_data = get_dataloader(train_data, parameters)
-
-    #average_traj_err_train_lstm = []
 
     #optimizer
     optimizer = torch.optim.AdamW(model.parameters(), lr = parameters["learning_rate"])
@@ -80,6 +86,10 @@ def main(parameters):
         if (e+1) % parameters["test_every_epochs"] == 0:
             test_error = test(data=test_data, model=model, window_size=parameters["window_size"])
             print(f"({model.get_flag()}) - Testing error : ", test_error)
+
+        if (e+1) % parameters["test_every_epochs"] == 0:
+            error_dic[model.get_flag() + "_test_err"].append(test_error)
+            error_dic[model.get_flag() + "_train_err"].append(train_error)
         
     # Save trained model
     path = f'Trained_networks/modeltype_{model.get_flag()}.pth'
@@ -95,6 +105,7 @@ def main(parameters):
     #logging.info(f"LSTM - Experiment number {parameters['experiment_number']}_{average_traj_err_train_lstm}")   
     logging.info("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
     logging.info("\n")
+    return error_dic
 
 if __name__ == '__main__':
 
@@ -103,9 +114,21 @@ if __name__ == '__main__':
 
     parameter_list = get_model_params(testing_mode)
     
-    list_of_NNs_to_train =  ["OR_LSTM", "OR_MLP", "OR_TCN", "LSTM", "MLP", "TCN"]# ["OR_LSTM", "OR_MLP", "OR_TCN", "LSTM", "MLP", "TCN"]
+    list_of_NNs_to_train =  ["OR_LSTM", "OR_MLP", "OR_TCN", "OR_RNN", "OR_GRU", "LSTM", "MLP", "TCN", "RNN", "GRU"]
+    error_dic = {x : [] for x in [x + "_train_err" for x in list_of_NNs_to_train] + [x + "_test_err" for x in list_of_NNs_to_train]}
 
     for parameters in parameter_list:
         if parameters["model_flag"] not in list_of_NNs_to_train:
             continue
+
         main(parameters)
+
+
+    max_length = max(len(v) for v in error_dic.values())
+    for key, value in error_dic.items():
+        if len(value) < max_length:
+            error_dic[key] = value + [0] * (max_length - len(value))
+
+    df = pd.DataFrame(error_dic)
+    df.to_csv(save_model_with_versioning(path="train_test_errors.csv"), index=False)
+    print("errors saved")

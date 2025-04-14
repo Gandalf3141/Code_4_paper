@@ -188,7 +188,7 @@ def test(
 
             # note that both OR and regular NNs use the same function during inferece
             # which is just the forward pass of the OR model
-            if model.get_flag() in ["OR_LSTM", "LSTM"]:
+            if model.get_flag() in ["OR_LSTM", "LSTM", "OR_RNN", "RNN", "OR_GRU", "GRU"]:
                 out, _ = model(x_test)
                 pred[window_size:,2:] = out
  
