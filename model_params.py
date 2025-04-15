@@ -5,7 +5,7 @@ import numpy as np
 # We take parameters that worked for other training runs..
 # the big difference between OR and TF models is the batch size!
 
-def get_model_params(testing_mode=True, params_specific=""):
+def get_model_params(testing_mode=True, robot_mode = False, params_specific=""):
     
     parameters_or_lstm =    {
                         "model_flag" : "OR_LSTM",
@@ -193,10 +193,10 @@ def get_model_params(testing_mode=True, params_specific=""):
     # amount of data used should be constant across all networks
     for parameters in param_list:
 
-        parameters["percentage_of_data"]  = 0.5
-        parameters["cut_off_timesteps"]  = 200
+        parameters["percentage_of_data"]  = 0.7
+        parameters["cut_off_timesteps"]  = 100
         parameters["part_of_data"]  = 0
-        parameters["epochs"]  = 1000
+        parameters["epochs"]  = 500
         parameters["T_max"] =  int(parameters["epochs"] / 2)
         parameters["test_every_epochs"]  = int(parameters["epochs"]/10)
         parameters["experiment_number"]  = np.random.randint(0,1000)
@@ -209,8 +209,8 @@ def get_model_params(testing_mode=True, params_specific=""):
        
         for parameters in param_list:
 
-            parameters["percentage_of_data"]  = 0.1
-            parameters["cut_off_timesteps"]  = 200
+            parameters["percentage_of_data"]  = 0.2
+            parameters["cut_off_timesteps"]  = 0
             parameters["part_of_data"]  = 50
             parameters["epochs"]  = 5
             parameters["test_every_epochs"]  = 2

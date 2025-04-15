@@ -5,7 +5,8 @@ from meas_dataset import *
 from torch.utils.data import DataLoader
 import numpy as np
 
-def get_dataloader(input_data, params): 
+def get_dataloader(input_data, params, robot_mode=False):
+    
 
     #Split data into train and test sets
     np.random.seed(1234)

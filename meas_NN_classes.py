@@ -3,6 +3,7 @@
 import torch
 from torch import nn
 from torch.nn.utils import weight_norm
+torch.set_default_dtype(torch.float32)
 #import torchcde
 
 #############################################################################################
@@ -20,9 +21,10 @@ class OR_LSTM(nn.Module):
         self.input_size = input_size
         self.ws = window_size
         self.flag = flag
+        self.out_size = out_size
         
         # Define LSTM layer
-        self.lstm = nn.LSTM(input_size, hidden_size, num_layers=layers, batch_first=True)
+        self.lstm = nn.LSTM(input_size, hidden_size, num_layers=layers, batch_first=True, dtype=torch.float32)
 
         # Define linear layer
         self.linear = nn.Linear(hidden_size, out_size)
@@ -33,17 +35,17 @@ class OR_LSTM(nn.Module):
 
         
         #init out
-        out = torch.zeros(one_full_traj.size(0), one_full_traj.size(1), 2, device=one_full_traj.device)
+        out = torch.zeros(one_full_traj.size(0), one_full_traj.size(1), self.out_size, device=one_full_traj.device)
 
         seq = one_full_traj[:, 0:self.ws, :]
         lstm_out, hidden = self.lstm(seq)           
         pred = self.linear(lstm_out)
         #only update next step
-        out = one_full_traj[:, self.ws-1:self.ws, 2:] + pred[:, -1: , :]
+        out = one_full_traj[:, self.ws-1:self.ws, self.out_size:] + pred[:, -1: , :]
 
         for t in range(1, self.ws): # für RK : range(1, self.ws + 2):
 
-            tmp = torch.cat((one_full_traj[:,self.ws+(t-1):self.ws+(t-1)+(out.size(dim=1)), 0:2] , out[:, :, :]), dim=2)
+            tmp = torch.cat((one_full_traj[:,self.ws+(t-1):self.ws+(t-1)+(out.size(dim=1)), 0:self.out_size] , out[:, :, :]), dim=2)
             seq = torch.cat((one_full_traj[:, t:self.ws, :], tmp), dim=1)
 
             lstm_out, hidden = self.lstm(seq)           
@@ -52,7 +54,7 @@ class OR_LSTM(nn.Module):
             
         for t in range(self.ws, one_full_traj.size(dim=1) - self.ws):
 
-            seq = torch.cat((one_full_traj[:, t : t + self.ws, 0:2], out[:, t - self.ws : t , :]), dim=2)
+            seq = torch.cat((one_full_traj[:, t : t + self.ws, 0:self.out_size], out[:, t - self.ws : t , :]), dim=2)
             
             lstm_out, hidden = self.lstm(seq)           
             pred = self.linear(lstm_out)
@@ -108,6 +110,7 @@ class OR_MLP(nn.Module):
         self.network = nn.Sequential(*layers)
         self.ws = window_size
         self.flag = flag
+        self.out_size = output_size
     
     def get_flag(self):
         return self.flag
@@ -115,25 +118,25 @@ class OR_MLP(nn.Module):
     def forward(self, one_full_traj):
 
                 #init out
-        out = torch.zeros(one_full_traj.size(0), one_full_traj.size(1), 2, device=one_full_traj.device)
+        out = torch.zeros(one_full_traj.size(0), one_full_traj.size(1), self.out_size, device=one_full_traj.device)
         
         seq = one_full_traj[:, 0:self.ws, :]
 
         #inp = torch.cat((seq[:, :self.ws,0], seq[:, :self.ws,1], seq[:, :self.ws,2]), dim=2)
-        inp = torch.stack([torch.cat((a[:, 0], a[:, 1], a[:, 2], a[:, 3])) for a in seq])
+        inp = torch.stack([torch.cat(tuple(a[:, i] for i in range(seq.size(dim=2)))) for a in seq])
         pred = self.network(inp) 
         
-        out = one_full_traj[:, self.ws-1:self.ws, 2:] + pred.view(one_full_traj.size(dim=0),1,2)
+        out = one_full_traj[:, self.ws-1:self.ws, self.out_size:] + pred.view(one_full_traj.size(dim=0),1,self.out_size)
         #out = one_full_traj[:, self.ws-1:self.ws, 1:]
         #print(out.size(),out)
 
         for t in range(1, self.ws): # für RK : range(1, self.ws + 2):
 
 
-            tmp = torch.cat((one_full_traj[:,self.ws+(t-1):self.ws+(t-1)+(out.size(dim=1)), 0:2] , out[:, :, :]), dim=2)
+            tmp = torch.cat((one_full_traj[:,self.ws+(t-1):self.ws+(t-1)+(out.size(dim=1)), 0:self.out_size] , out[:, :, :]), dim=2)
             seq = torch.cat((one_full_traj[:, t:self.ws, :], tmp), dim=1)
 
-            inp = torch.stack([torch.cat((a[:, 0], a[:, 1], a[:, 2], a[:, 3])) for a in seq])
+            inp = torch.stack([torch.cat(tuple(a[:, i] for i in range(seq.size(dim=2)))) for a in seq])
 
             pred = self.network(inp)
 
@@ -142,9 +145,9 @@ class OR_MLP(nn.Module):
 
         for t in range(self.ws, one_full_traj.size(dim=1) - self.ws):
 
-            seq = torch.cat((one_full_traj[:, t : t + self.ws, 0:2], out[:, t - self.ws : t , :]), dim=2)
+            seq = torch.cat((one_full_traj[:, t : t + self.ws, 0:self.out_size], out[:, t - self.ws : t , :]), dim=2)
             
-            inp = torch.stack([torch.cat((a[:, 0], a[:, 1], a[:, 2], a[:, 3])) for a in seq])
+            inp = torch.stack([torch.cat(tuple(a[:, i] for i in range(seq.size(dim=2)))) for a in seq])
 
             pred = self.network(inp)
 
@@ -169,6 +172,8 @@ class OR_TCN(nn.Module):
         self.init_weights()
         self.ws = windowsize
         self.flag = flag
+        self.out_size = output_size
+
     def get_flag(self):
         return self.flag
 
@@ -178,7 +183,7 @@ class OR_TCN(nn.Module):
     def forward(self, one_full_traj):
 
         #init out
-        out = torch.zeros(one_full_traj.size(0), one_full_traj.size(1), 2, device=one_full_traj.device)
+        out = torch.zeros(one_full_traj.size(0), one_full_traj.size(1), self.out_size, device=one_full_traj.device)
         # war falsch ! (hat trotzdem funktioniert???)
         #seq = one_full_traj[:, 0:self.ws, :]
         seq = one_full_traj[:, :, 0:self.ws]
@@ -186,13 +191,13 @@ class OR_TCN(nn.Module):
         y1 = self.tcn(seq)
         pred = self.linear(y1[:, :, -1])
         #only update next step
-        out = one_full_traj[:, 2:, self.ws-1] + pred
+        out = one_full_traj[:, self.out_size:, self.ws-1] + pred
         out = out.unsqueeze(-1)
         #derivatie_sv = pred
 
         for t in range(1, self.ws): # für RK : range(1, self.ws + 2):
 
-            tmp = torch.cat((one_full_traj[:, 0:2, self.ws+(t-1):self.ws+(t-1)+(out.size(dim=2))] , out[:, :, :]), dim=1)
+            tmp = torch.cat((one_full_traj[:, 0:self.out_size, self.ws+(t-1):self.ws+(t-1)+(out.size(dim=2))] , out[:, :, :]), dim=1)
             seq = torch.cat((one_full_traj[:, :, t:self.ws], tmp), dim=2)
 
             y1 = self.tcn(seq)
@@ -207,7 +212,7 @@ class OR_TCN(nn.Module):
 
         for t in range(self.ws, one_full_traj.size(dim=2) - self.ws):
 
-            seq = torch.cat((one_full_traj[:, 0:2, t : t + self.ws], out[:, :, t - self.ws : t]), dim=1)
+            seq = torch.cat((one_full_traj[:, 0:self.out_size, t : t + self.ws], out[:, :, t - self.ws : t]), dim=1)
             
             y1 = self.tcn(seq)
             pred = self.linear(y1[:, :, -1])
@@ -239,7 +244,8 @@ class OR_RNN(nn.Module):
         self.input_size = input_size
         self.ws = window_size
         self.flag = flag
-        
+        self.out_size = out_size
+
         # Define RNN layer
         self.rnn = nn.RNN(input_size, hidden_size, num_layers=layers, batch_first=True)
 
@@ -252,16 +258,16 @@ class OR_RNN(nn.Module):
     def forward(self, one_full_traj):
 
                 #init out
-        out = torch.zeros(one_full_traj.size(0), one_full_traj.size(1), 2, device=one_full_traj.device)
+        out = torch.zeros(one_full_traj.size(0), one_full_traj.size(1), self.out_size, device=one_full_traj.device)
 
         seq = one_full_traj[:, 0:self.ws, :]
         rnn_out, hidden = self.rnn(seq)           
         pred = self.linear(rnn_out)
         # Only update next step
-        out = one_full_traj[:, self.ws-1:self.ws, 2:] + pred[:, -1:, :]
+        out = one_full_traj[:, self.ws-1:self.ws, self.out_size:] + pred[:, -1:, :]
 
         for t in range(1, self.ws):
-            tmp = torch.cat((one_full_traj[:, self.ws+(t-1):self.ws+(t-1)+(out.size(dim=1)), 0:2], out[:, :, :]), dim=2)
+            tmp = torch.cat((one_full_traj[:, self.ws+(t-1):self.ws+(t-1)+(out.size(dim=1)), 0:self.out_size], out[:, :, :]), dim=2)
             seq = torch.cat((one_full_traj[:, t:self.ws, :], tmp), dim=1)
 
             rnn_out, hidden = self.rnn(seq)           
@@ -269,7 +275,7 @@ class OR_RNN(nn.Module):
             out = torch.cat((out, out[:, -1:, :] + pred[:, -1:, :]), dim=1)
             
         for t in range(self.ws, one_full_traj.size(dim=1) - self.ws):
-            seq = torch.cat((one_full_traj[:, t:t+self.ws, 0:2], out[:, t-self.ws:t, :]), dim=2)
+            seq = torch.cat((one_full_traj[:, t:t+self.ws, 0:self.out_size], out[:, t-self.ws:t, :]), dim=2)
             rnn_out, hidden = self.rnn(seq)           
             pred = self.linear(rnn_out)
             out = torch.cat((out, out[:, t-1:t, :] + pred[:, -1:, :]), dim=1)
@@ -281,7 +287,6 @@ class OR_RNN(nn.Module):
         pred = self.linear(rnn_out)
         return pred, hidden
 
-
 # OR - GRU
 class OR_GRU(nn.Module):
 
@@ -292,6 +297,7 @@ class OR_GRU(nn.Module):
         self.input_size = input_size
         self.ws = window_size
         self.flag = flag
+        self.out_size = out_size
         
         # Define GRU layer
         self.gru = nn.GRU(input_size, hidden_size, num_layers=layers, batch_first=True)
@@ -305,16 +311,16 @@ class OR_GRU(nn.Module):
     def forward(self, one_full_traj):
         
                 #init out
-        out = torch.zeros(one_full_traj.size(0), one_full_traj.size(1), 2, device=one_full_traj.device)
+        out = torch.zeros(one_full_traj.size(0), one_full_traj.size(1), self.out_size, device=one_full_traj.device)
 
         seq = one_full_traj[:, 0:self.ws, :]
         gru_out, hidden = self.gru(seq)           
         pred = self.linear(gru_out)
         # Only update next step
-        out = one_full_traj[:, self.ws-1:self.ws, 2:] + pred[:, -1:, :]
+        out = one_full_traj[:, self.ws-1:self.ws, self.out_size:] + pred[:, -1:, :]
 
         for t in range(1, self.ws):
-            tmp = torch.cat((one_full_traj[:, self.ws+(t-1):self.ws+(t-1)+(out.size(dim=1)), 0:2], out[:, :, :]), dim=2)
+            tmp = torch.cat((one_full_traj[:, self.ws+(t-1):self.ws+(t-1)+(out.size(dim=1)), 0:self.out_size], out[:, :, :]), dim=2)
             seq = torch.cat((one_full_traj[:, t:self.ws, :], tmp), dim=1)
 
             gru_out, hidden = self.gru(seq)           
@@ -322,7 +328,7 @@ class OR_GRU(nn.Module):
             out = torch.cat((out, out[:, -1:, :] + pred[:, -1:, :]), dim=1)
             
         for t in range(self.ws, one_full_traj.size(dim=1) - self.ws):
-            seq = torch.cat((one_full_traj[:, t:t+self.ws, 0:2], out[:, t-self.ws:t, :]), dim=2)
+            seq = torch.cat((one_full_traj[:, t:t+self.ws, 0:self.out_size], out[:, t-self.ws:t, :]), dim=2)
             gru_out, hidden = self.gru(seq)           
             pred = self.linear(gru_out)
             out = torch.cat((out, out[:, t-1:t, :] + pred[:, -1:, :]), dim=1)
@@ -333,7 +339,6 @@ class OR_GRU(nn.Module):
         gru_out, hidden = self.gru(seq)           
         pred = self.linear(gru_out)
         return pred, hidden
-
 
 
 # not clear yet if net step prediction models will be used. 
@@ -352,6 +357,7 @@ class LSTM_or_nextstep(nn.Module):
         self.hidden_size = hidden_size
         self.input_size = input_size
         self.ws = window_size
+        
         
         # Define LSTM layer
         self.lstm = nn.LSTM(input_size, hidden_size, num_layers=layers, batch_first=True)

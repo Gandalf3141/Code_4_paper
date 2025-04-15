@@ -2,6 +2,8 @@ import torch
 from torch.utils.data import Dataset
 
 #this return (u1,u2,s,v), (s,v)
+# Assumption: there are as many inputs as system states! #u = #x
+
 class custom_simple_dataset(Dataset):
  
     def __init__(self, data, window_size):
@@ -15,11 +17,10 @@ class custom_simple_dataset(Dataset):
     def __getitem__(self, idx):
  
         inp = self.data[idx, :, :]
-        label = self.data[idx, self.ws:, 2:]
+        label = self.data[idx, self.ws:, int(self.data.size(dim=2)/2):]
 
         return inp, label
 
-# no change needed since other system was (p,s,v) with label (s,v)
 # LSTM and TCN without OR
 class CustomDataset(Dataset):
 
@@ -106,6 +107,7 @@ class CustomDataset_mlp(Dataset):
 
         last = inp[-1:,:]
 
-        inp = torch.cat((inp[:,0], inp[:,1], inp[:,2], inp[:,3]))
+        #inp = torch.cat((inp[:,0], inp[:,1], inp[:,2], inp[:,3]))
+        inp = torch.cat(tuple(inp[:,i] for i in range(inp.size(dim=1))))
         
         return inp, last, label

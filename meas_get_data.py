@@ -2,7 +2,7 @@ import torch
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-
+import os
 # Import data for full system.
 
 # Structure : [Batchsize, Sequence Length, Values] (switches for TCN but not here!)
@@ -56,7 +56,7 @@ def get_data(path, num_inits=0):
     if num_inits>1:
        df = df.iloc[:,0:4*num_inits]
 
-    tensor = torch.tensor(df.values)
+    tensor = torch.tensor(df.values, dtype=torch.float32)
 
     a = num_inits if num_inits>0 else 500
     a=int(len(df.columns.to_list())/4)
@@ -65,6 +65,56 @@ def get_data(path, num_inits=0):
     tensor = normalize(tensor)
 
     return tensor
+
+def get_data_robot():
+    #training data is 33 trajectories each executed 2 times -> 66 trajectories
+    #normalising will make the trajectories not start at 0! 
+    #can be inverted later!
+    """
+    Loads and normalizes robot training and testing data.
+    Returns:
+        train_tensor: Normalized training data as a torch tensor.
+        test_tensor: Normalized testing data as a torch tensor.
+    """
+    # Load training data
+    if os.name == "nt":
+        path_train_data=r"C:\Users\StrasserP\Documents\NN_Paper\Code_4_paper\robotarm\robot_train_data.csv"
+    else:
+        path_train_data=r"/home/rdpusr/Documents/Code_4_paper/robotarm/robot_train_data.csv"
+    train_df = pd.read_csv(path_train_data)
+    train_tensor = torch.tensor(train_df.values, dtype=torch.float32)
+
+    # Normalize training data (column-wise min-max normalization)
+    train_min = train_tensor.min(dim=0, keepdim=True).values
+    train_max = train_tensor.max(dim=0, keepdim=True).values
+    train_tensor = (train_tensor - train_min) / (train_max - train_min)
+
+    num_trajectories = 66
+    num_steps = train_tensor.size(0) // num_trajectories
+    num_features = train_tensor.size(1)
+    reshaped_tensor_train = train_tensor[:39930,:].view(num_trajectories, num_steps, num_features)
+
+
+    # Load testing data
+    if os.name == "nt":
+     path_test_data=r"C:\Users\StrasserP\Documents\NN_Paper\Code_4_paper\robotarm\robot_test_data.csv"
+    else:
+     path_test_data=r"/home/rdpusr/Documents/Code_4_paper/robotarm/robot_test_data.csv"
+    test_df = pd.read_csv(path_test_data)
+    test_tensor = torch.tensor(test_df.values, dtype=torch.float32)
+
+    # Normalize testing data (column-wise min-max normalization)
+    test_min = test_tensor.min(dim=0, keepdim=True).values
+    test_max = test_tensor.max(dim=0, keepdim=True).values
+    test_tensor = (test_tensor - test_min) / (test_max - test_min)
+
+    num_trajectories = 6
+    num_steps = test_tensor.size(0) // num_trajectories
+    num_features = test_tensor.size(1)
+    reshaped_tensor_test = test_tensor.view(num_trajectories, num_steps, num_features)
+
+
+    return reshaped_tensor_train, reshaped_tensor_test #shapes torch.Size([66, 605, 12]) torch.Size([6, 606, 12])
 
 
 def visualise(data, num_inits):

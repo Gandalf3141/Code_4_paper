@@ -5,31 +5,33 @@ from meas_dataset import *
 from tqdm import tqdm
 from meas_test_func_fs import *
 from meas_dataloader import *
+device = "cuda:0" if torch.cuda.is_available() else "cpu"
 
 # train functions
 
 def train_lstm_no_or_derivative(traindataloader, model, optimizer, lr_scheduler, use_lr_scheduler=False):
-   
+    
     loss_fn = nn.MSELoss()
     model.train()
     total_loss = []
-    device = next(model.parameters()).device
+    #device = next(model.parameters()).device
 
     for k, (inp, label) in enumerate(traindataloader):  # inp = (u, x) label = x
-
+        
         inp=inp.to(device)
         label=label.to(device)
+        num_outs = int(inp.size(dim=2) / 2) # number of outputs = number of states which is half of the input size
 
         # Predict one timestep :
         output, _ = model.simple_forward(inp)
-        out = inp[:,-1:, 2:] + output[:, -1:, :]
+        out = inp[:,-1:, num_outs:] + output[:, -1:, :]
 
         # reset the gradient
         
         optimizer.zero_grad(set_to_none=True)
         # calculate the error
 
-        loss = loss_fn(out[:,-1,:], label[:, 2:])
+        loss = loss_fn(out[:,-1,:], label[:, num_outs:])
 
         loss.backward()
         torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
@@ -46,23 +48,29 @@ def train_mlp_no_or_derivative(traindataloader, model, optimizer, lr_scheduler, 
     loss_fn = nn.MSELoss()
     model.train()
     total_loss = []
-    device = next(model.parameters()).device
+    #device = next(model.parameters()).device
+    
   
     for k, (x, x_last, y) in enumerate(traindataloader):  # inp = (u, x) label = x
         
+        
+
         x = x.to(device)
         y = y.to(device)
         x_last = x_last.to(device)
         x_last = x_last.squeeze()
         
+        
         output = model.simple_forward(x)
-        pred = x_last[:,2:] + output[:, :]
+        num_outs = int(y.size(dim=1) / 2) # number of outputs = number of states which is half of the input size
+        #print(num_outs , x_last.shape, x.shape, y.shape, output.shape)
+        pred = x_last[:,num_outs:] + output[:, :]
 
         # reset the gradient
         optimizer.zero_grad(set_to_none=True)
         
         # calculate the error
-        loss = loss_fn(pred, y[:,2:])
+        loss = loss_fn(pred, y[:,num_outs:])
         loss.backward()
         torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
         optimizer.step()
@@ -80,20 +88,22 @@ def train_tcn_no_or_derivative(traindataloader, model, optimizer, lr_scheduler, 
     loss_fn = nn.MSELoss()
     model.train()
     total_loss = []
-    device = next(model.parameters()).device
+    #device = next(model.parameters()).device
   
     for k, (x,y) in enumerate(traindataloader):  # inp = (u, x) label = x
         
+       
         x = x.to(device)
         y = y.to(device)
+        num_outs = int(y.size(dim=1) / 2) # number of outputs = number of states which is half of the input size
 
         x = x.transpose(1,2)
 
         output = model.simple_forward(x)
-        out = x[:, 2:, -1] + output
+        out = x[:, num_outs:, -1] + output
 
         optimizer.zero_grad(set_to_none=True)
-        loss = loss_fn(out, y[:, 2:])
+        loss = loss_fn(out, y[:, num_outs:])
         loss.backward()
         torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
         optimizer.step()
@@ -108,7 +118,7 @@ def train(traindataloader, model, optimizer, lr_scheduler, use_lr_scheduler=Fals
     loss_fn = nn.MSELoss()
     model.train()
     total_loss = []
-    device = next(model.parameters()).device
+    #device = next(model.parameters()).device
 
     if model.get_flag() in ["LSTM", "RNN", "GRU"]:
         return train_lstm_no_or_derivative(traindataloader, model, optimizer, lr_scheduler)
