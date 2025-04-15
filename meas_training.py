@@ -98,6 +98,7 @@ def main(parameters):
 
 
     print(f"Run finished!")
+
     print(path)
 
     # Log parameters
@@ -111,11 +112,11 @@ def main(parameters):
 if __name__ == '__main__':
 
     # toggle to test everything with a small amount of data
-    testing_mode = True
+    testing_mode = False
 
     parameter_list = get_model_params(testing_mode)
     
-    list_of_NNs_to_train =  ["OR_LSTM", "OR_MLP", "OR_TCN", "OR_RNN", "OR_GRU", "LSTM", "MLP", "TCN", "RNN", "GRU"]
+    list_of_NNs_to_train =  ["OR_MLP", "MLP", "OR_LSTM", "LSTM", "OR_TCN",  "TCN", "OR_RNN", "RNN", "OR_GRU",  "GRU"]
     error_dic = {x : [] for x in [x + "_train_err" for x in list_of_NNs_to_train] + [x + "_test_err" for x in list_of_NNs_to_train]}
 
     for parameters in parameter_list:

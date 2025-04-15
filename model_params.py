@@ -182,16 +182,21 @@ def get_model_params(testing_mode=True, params_specific=""):
                         
                         }
     
-    param_list = [parameters_or_lstm, parameters_or_mlp, parameters_or_tcn, parameters_or_rnn, parameters_or_gru
-                  , parameters_lstm, parameters_mlp, parameters_tcn, parameters_rnn, parameters_gru]
+    param_list = [ 
+                   parameters_or_mlp,parameters_mlp,
+                   parameters_or_rnn,parameters_rnn,
+                   parameters_or_gru,parameters_gru,
+                   parameters_or_lstm, parameters_lstm,
+                   parameters_or_tcn, parameters_tcn
+                   ]
 
     # amount of data used should be constant across all networks
     for parameters in param_list:
 
-        parameters["percentage_of_data"]  = 0.7
+        parameters["percentage_of_data"]  = 0.5
         parameters["cut_off_timesteps"]  = 200
         parameters["part_of_data"]  = 0
-        parameters["epochs"]  = 2000
+        parameters["epochs"]  = 1000
         parameters["T_max"] =  int(parameters["epochs"] / 2)
         parameters["test_every_epochs"]  = int(parameters["epochs"]/10)
         parameters["experiment_number"]  = np.random.randint(0,1000)
@@ -200,9 +205,7 @@ def get_model_params(testing_mode=True, params_specific=""):
             return [parameters]
         
     if testing_mode:
-
-        param_list = [parameters_or_lstm, parameters_or_mlp, parameters_or_tcn, parameters_or_rnn, parameters_or_gru,
-                      parameters_lstm, parameters_mlp, parameters_tcn, parameters_rnn, parameters_gru]   
+   
        
         for parameters in param_list:
 
