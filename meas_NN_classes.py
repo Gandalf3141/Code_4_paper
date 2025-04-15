@@ -300,7 +300,7 @@ class OR_GRU(nn.Module):
         self.out_size = out_size
         
         # Define GRU layer
-        self.gru = nn.GRU(input_size, hidden_size, num_layers=layers, batch_first=True)
+        self.gru = nn.GRU(input_size, hidden_size, num_layers=layers, batch_first=True, dtype=torch.float32)
 
         # Define linear layer
         self.linear = nn.Linear(hidden_size, out_size)

@@ -193,10 +193,10 @@ def get_model_params(testing_mode=True, robot_mode = False, params_specific=""):
     # amount of data used should be constant across all networks
     for parameters in param_list:
 
-        parameters["percentage_of_data"]  = 0.7
-        parameters["cut_off_timesteps"]  = 100
+        parameters["percentage_of_data"]  = 0.8
+        parameters["cut_off_timesteps"]  = 0
         parameters["part_of_data"]  = 0
-        parameters["epochs"]  = 500
+        parameters["epochs"]  = 1000
         parameters["T_max"] =  int(parameters["epochs"] / 2)
         parameters["test_every_epochs"]  = int(parameters["epochs"]/10)
         parameters["experiment_number"]  = np.random.randint(0,1000)
