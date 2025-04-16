@@ -12,82 +12,63 @@ def search_params_robot(params_specific):
     if params_specific == "OR_LSTM":
         p1 =    {
                         "model_flag" : "OR_LSTM",
-                        "window_size" : 8,
+                        "window_size" : 8, # 8 best
+                        "h_size" : 16, # 16 best
+                        "l_num" : 1,
+                        "batch_size" : 20,
+                        "experiment_number" : np.random.randint(0,1000),
+        
+                }
+        key = "batch_size"  
+        p2 = p1.copy()
+        p2[key] = 16
+        p3 = p1.copy()
+        p3[key] = 24
+        p4 = p1.copy()
+        p4[key] = 32
+        p5 = p1.copy()
+        p5[key] = 48
+
+    if params_specific == "LSTM":
+        p1 =    {
+                        "model_flag" : "OR_LSTM",
+                        "window_size" : 8, #best
                         "h_size" : 16, # best
                         "l_num" : 1,
                         "batch_size" : 20,
                         "experiment_number" : np.random.randint(0,1000),
-                        }  
+        
+                }
+        key = "batch_size"  
         p2 = p1.copy()
-        p2["window_size"] = 16
+        p2[key] = 16
         p3 = p1.copy()
-        p3["window_size"] = 24
+        p3[key] = 24
         p4 = p1.copy()
-        p4["window_size"] = 32
+        p4[key] = 32
         p5 = p1.copy()
-        p5["window_size"] = 48
-
-    if params_specific == "LSTM":
-        p1 =    {
-                        "model_flag" : "LSTM",
-                        "window_size" : 32,
-                        "h_size" : 4,
-                        "l_num" : 1,
-                        "batch_size" : 20,
-                        "experiment_number" : np.random.randint(0,1000),
-                        }  
-        p2 =    {
-                        "model_flag" : "LSTM",
-                        "window_size" : 32,
-                        "h_size" : 8,
-                        "l_num" : 1,
-                        "batch_size" : 20,
-                        "experiment_number" : np.random.randint(0,1000),
-                        } 
-        p3 =    {
-                        "model_flag" : "LSTM",
-                        "window_size" : 32,
-                        "h_size" : 16,
-                        "l_num" : 1,
-                        "batch_size" : 20,
-                        "experiment_number" : np.random.randint(0,1000),
-                        }  
-        p4 =    {
-                        "model_flag" : "LSTM",
-                        "window_size" : 32,
-                        "h_size" : 32,
-                        "l_num" : 1,
-                        "batch_size" : 20,
-                        "experiment_number" : np.random.randint(0,1000),
-                        } 
-        p5 =    {
-                        "model_flag" : "LSTM",
-                        "window_size" : 32,
-                        "h_size" : 64,
-                        "l_num" : 1,
-                        "batch_size" : 20,
-                        "experiment_number" : np.random.randint(0,1000),
-                        } 
+        p5[key] = 48
 
     if params_specific == "OR_MLP":
                
             p1 =    {
                     "model_flag" : "OR_MLP",
                     "window_size" : 20,
-                    "h_size" : 8,
+                    "h_size" : 16, # 16 best
                     "l_num" : 1,
                     "learning_rate" : 0.001,
                     "batch_size" : 80,
                     "experiment_number" : np.random.randint(0,1000)
                     }
+            key = "batch_size"  
             p2 = p1.copy()
-            p2["h_size"] = 16
+            p2[key] = 16
             p3 = p1.copy()
-            p3["h_size"] = 32
+            p3[key] = 24
             p4 = p1.copy()
-            p4["h_size"] = 64
+            p4[key] = 32
             p5 = p1.copy()
-            p5["h_size"] = 128
+            p5[key] = 48
     
     if params_specific == "MLP":
                
@@ -100,14 +81,15 @@ def search_params_robot(params_specific):
                     "batch_size" : 80,
                     "experiment_number" : np.random.randint(0,1000)
                     }
+            key = "batch_size"  
             p2 = p1.copy()
-            p2["h_size"] = 16
+            p2[key] = 16
             p3 = p1.copy()
-            p3["h_size"] = 32
+            p3[key] = 24
             p4 = p1.copy()
-            p4["h_size"] = 64
+            p4[key] = 32
             p5 = p1.copy()
-            p5["h_size"] = 128
+            p5[key] = 48
 
     if params_specific == "OR_TCN":
             
@@ -121,14 +103,15 @@ def search_params_robot(params_specific):
                 "batch_size" : 30,
                 "experiment_number" : np.random.randint(0,1000)                        
                         }
+            key = "batch_size"  
             p2 = p1.copy()
-            p2["h_size"] = 4
+            p2[key] = 16
             p3 = p1.copy()
-            p3["h_size"] = 5
+            p3[key] = 24
             p4 = p1.copy()
-            p4["h_size"] = 6
+            p4[key] = 32
             p5 = p1.copy()
-            p5["h_size"] = 7    
+            p5[key] = 48    
 
     if params_specific == "TCN":
             
@@ -142,14 +125,15 @@ def search_params_robot(params_specific):
                 "batch_size" : 30,
                 "experiment_number" : np.random.randint(0,1000)                        
                         }
+            key = "batch_size"  
             p2 = p1.copy()
-            p2["h_size"] = 4
+            p2[key] = 16
             p3 = p1.copy()
-            p3["h_size"] = 5
+            p3[key] = 24
             p4 = p1.copy()
-            p4["h_size"] = 6
+            p4[key] = 32
             p5 = p1.copy()
-            p5["h_size"] = 7 
+            p5[key] = 48 
 
     if params_specific == "OR_GRU":
             
@@ -162,14 +146,15 @@ def search_params_robot(params_specific):
                 "batch_size" : 20,
                 "experiment_number" : np.random.randint(0,1000)                        
                         }
+            key = "batch_size"  
             p2 = p1.copy()
-            p2["h_size"] = 8
+            p2[key] = 16
             p3 = p1.copy()
-            p3["h_size"] = 16
+            p3[key] = 24
             p4 = p1.copy()
-            p4["h_size"] = 32
+            p4[key] = 32
             p5 = p1.copy()
-            p5["h_size"] = 64
+            p5[key] = 48
 
     if params_specific == "GRU":
             
@@ -182,14 +167,15 @@ def search_params_robot(params_specific):
                 "batch_size" : 20,
                 "experiment_number" : np.random.randint(0,1000)                        
                         }
+            key = "batch_size"  
             p2 = p1.copy()
-            p2["h_size"] = 8
+            p2[key] = 16
             p3 = p1.copy()
-            p3["h_size"] = 16
+            p3[key] = 24
             p4 = p1.copy()
-            p4["h_size"] = 32
+            p4[key] = 32
             p5 = p1.copy()
-            p5["h_size"] = 64
+            p5[key] = 48
 
     if params_specific == "OR_RNN":
             
@@ -202,14 +188,15 @@ def search_params_robot(params_specific):
                 "batch_size" : 20,
                 "experiment_number" : np.random.randint(0,1000)                        
                         }
+            key = "batch_size"  
             p2 = p1.copy()
-            p2["h_size"] = 8
+            p2[key] = 16
             p3 = p1.copy()
-            p3["h_size"] = 16
+            p3[key] = 24
             p4 = p1.copy()
-            p4["h_size"] = 32
+            p4[key] = 32
             p5 = p1.copy()
-            p5["h_size"] = 64
+            p5[key] = 48
 
     if params_specific == "RNN":
             
@@ -222,14 +209,15 @@ def search_params_robot(params_specific):
                 "batch_size" : 20,
                 "experiment_number" : np.random.randint(0,1000)                        
                         }
+            key = "batch_size"  
             p2 = p1.copy()
-            p2["h_size"] = 8
+            p2[key] = 16
             p3 = p1.copy()
-            p3["h_size"] = 16
+            p3[key] = 24
             p4 = p1.copy()
-            p4["h_size"] = 32
+            p4[key] = 32
             p5 = p1.copy()
-            p5["h_size"] = 64
+            p5[key] = 48
 
 
     params_list = [p1, p2, p3, p4, p5]
