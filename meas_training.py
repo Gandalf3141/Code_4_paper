@@ -137,6 +137,7 @@ if __name__ == '__main__':
     # toggle to test everything with a small amount of data
     testing_mode = False
     robot_mode = True
+    param_search_mode = True
 
     if robot_mode:
         parameter_list = get_model_params_robot(testing_mode, robot_mode, params_search=True, params_specific="OR_LSTM")
@@ -146,11 +147,17 @@ if __name__ == '__main__':
     list_of_NNs_to_train = ["OR_LSTM", "LSTM", "OR_TCN", "TCN", "OR_MLP", "MLP"] #["OR_LSTM", "OR_MLP", "OR_TCN", "OR_RNN", "OR_GRU", "LSTM", "MLP", "TCN", "RNN", "GRU"]
     error_dic = {x : [] for x in [x + "_train_err" for x in list_of_NNs_to_train] + [x + "_test_err" for x in list_of_NNs_to_train]}
 
-    for parameters in parameter_list:
-        if parameters["model_flag"] not in list_of_NNs_to_train:
-            continue
+    if param_search_mode:
+        for param_search_nets in ["OR_LSTM", "OR_MLP", "OR_TCN", "OR_RNN", "OR_GRU", "LSTM", "MLP", "TCN", "RNN", "GRU"]:
+            parameter_list = get_model_params_robot(testing_mode, robot_mode, params_search=True, params_specific=param_search_nets)
+            for parameters in parameter_list:
+                main(parameters)
+    else:
+        for parameters in parameter_list:
+            if parameters["model_flag"] not in list_of_NNs_to_train:
+                continue
 
-        main(parameters)
+            main(parameters)
 
     #save errors as csv
     max_length = max(len(v) for v in error_dic.values())

@@ -12,44 +12,20 @@ def search_params_robot(params_specific):
     if params_specific == "OR_LSTM":
         p1 =    {
                         "model_flag" : "OR_LSTM",
-                        "window_size" : 32,
-                        "h_size" : 4,
+                        "window_size" : 8,
+                        "h_size" : 16, # best
                         "l_num" : 1,
                         "batch_size" : 20,
                         "experiment_number" : np.random.randint(0,1000),
                         }  
-        p2 =    {
-                        "model_flag" : "OR_LSTM",
-                        "window_size" : 32,
-                        "h_size" : 8,
-                        "l_num" : 1,
-                        "batch_size" : 20,
-                        "experiment_number" : np.random.randint(0,1000),
-                        } 
-        p3 =    {
-                        "model_flag" : "OR_LSTM",
-                        "window_size" : 32,
-                        "h_size" : 16,
-                        "l_num" : 1,
-                        "batch_size" : 20,
-                        "experiment_number" : np.random.randint(0,1000),
-                        }  
-        p4 =    {
-                        "model_flag" : "OR_LSTM",
-                        "window_size" : 32,
-                        "h_size" : 32,
-                        "l_num" : 1,
-                        "batch_size" : 20,
-                        "experiment_number" : np.random.randint(0,1000),
-                        } 
-        p5 =    {
-                        "model_flag" : "OR_LSTM",
-                        "window_size" : 32,
-                        "h_size" : 64,
-                        "l_num" : 1,
-                        "batch_size" : 20,
-                        "experiment_number" : np.random.randint(0,1000),
-                        }  
+        p2 = p1.copy()
+        p2["window_size"] = 16
+        p3 = p1.copy()
+        p3["window_size"] = 24
+        p4 = p1.copy()
+        p4["window_size"] = 32
+        p5 = p1.copy()
+        p5["window_size"] = 48
 
     if params_specific == "LSTM":
         p1 =    {
