@@ -5,24 +5,63 @@ import numpy as np
 # We take parameters that worked for other training runs..
 # the big difference between OR and TF models is the batch size!
 
-def search_params(params_specific):
+# ONLY ROBOT ARM PARAMS HERE!
+
+def search_params_robot(params_specific):
 
     if params_specific == "OR_LSTM":
-          parameters_or_lstm1 =    {
+        parameters_or_lstm1 =    {
                         "model_flag" : "OR_LSTM",
-                        "window_size" : 16,
+                        "window_size" : 32,
+                        "h_size" : 4,
+                        "l_num" : 1,
+                        "learning_rate" : 0.001,
+                        "batch_size" : 20,
+                        "experiment_number" : np.random.randint(0,1000),
+                        }  
+        parameters_or_lstm2 =    {
+                        "model_flag" : "OR_LSTM",
+                        "window_size" : 32,
                         "h_size" : 8,
-                        "l_num" : 3,
+                        "l_num" : 1,
+                        "learning_rate" : 0.001,
+                        "batch_size" : 20,
+                        "experiment_number" : np.random.randint(0,1000),
+                        } 
+        parameters_or_lstm3 =    {
+                        "model_flag" : "OR_LSTM",
+                        "window_size" : 32,
+                        "h_size" : 16,
+                        "l_num" : 1,
+                        "learning_rate" : 0.001,
+                        "batch_size" : 20,
+                        "experiment_number" : np.random.randint(0,1000),
+                        }  
+        parameters_or_lstm4 =    {
+                        "model_flag" : "OR_LSTM",
+                        "window_size" : 32,
+                        "h_size" : 32,
+                        "l_num" : 1,
+                        "learning_rate" : 0.001,
+                        "batch_size" : 20,
+                        "experiment_number" : np.random.randint(0,1000),
+                        } 
+        parameters_or_lstm5 =    {
+                        "model_flag" : "OR_LSTM",
+                        "window_size" : 32,
+                        "h_size" : 64,
+                        "l_num" : 1,
                         "learning_rate" : 0.001,
                         "batch_size" : 20,
                         "experiment_number" : np.random.randint(0,1000),
                         }  
 
-    params_list = [parameters_or_lstm1, parameters_or_lstm2, parameters_or_lstm3, parameters_or_lstm4, parameters_or_lstm5, parameters_or_lstm6]
-    return parameter_list
+
+    params_list = [parameters_or_lstm1, parameters_or_lstm2, parameters_or_lstm3, parameters_or_lstm4, parameters_or_lstm5]
+    return params_list
 
 
-def get_model_params(testing_mode=True, robot_mode = False, params_specific="", params_search=True):
+def get_model_params_robot(testing_mode=True, robot_mode = False, params_specific="", params_search=True):
     
     parameters_or_lstm =    {
                         "model_flag" : "OR_LSTM",
@@ -218,7 +257,7 @@ def get_model_params(testing_mode=True, robot_mode = False, params_specific="", 
         parameters["test_every_epochs"]  = int(parameters["epochs"]/10)
         parameters["experiment_number"]  = np.random.randint(0,1000)
 
-        if params_specific == parameters["model_flag"]:
+        if params_specific == parameters["model_flag"] and params_search == False:
             return [parameters]
         
     if testing_mode:
@@ -235,15 +274,15 @@ def get_model_params(testing_mode=True, robot_mode = False, params_specific="", 
         
     if params_search: 
         
-        param_list = search_params(params_specific)
-
-        parameters["percentage_of_data"]  = 0.8
-        parameters["cut_off_timesteps"]  = 0
-        parameters["part_of_data"]  = 0
-        parameters["epochs"]  = 1000
-        parameters["T_max"] =  int(parameters["epochs"] / 2)
-        parameters["test_every_epochs"]  = int(parameters["epochs"]/10)
-        parameters["experiment_number"]  = np.random.randint(0,1000)
+        param_list = search_params_robot(params_specific)
+        for parameters in param_list:
+            parameters["percentage_of_data"]  = 0.2
+            parameters["cut_off_timesteps"]  = 0
+            parameters["part_of_data"]  = 50
+            parameters["epochs"]  = 5
+            parameters["T_max"] =  int(parameters["epochs"] / 2)
+            parameters["test_every_epochs"]  = int(parameters["epochs"]/2)
+            parameters["experiment_number"]  = np.random.randint(0,1000)
 
     return param_list
 

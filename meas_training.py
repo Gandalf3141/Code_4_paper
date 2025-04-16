@@ -9,6 +9,7 @@ from meas_test_func_fs import *
 from meas_dataloader import *
 from meas_train_funcs import *
 from model_params import get_model_params
+from model_params_robot import get_model_params_robot
 import pandas as pd
 
 torch.set_default_dtype(torch.float32)
@@ -39,10 +40,11 @@ def main(parameters):
         
 
     # Configure logging
-    log_file = f"training_model_{parameters['model_flag']}_{parameters['experiment_number']}.log" if robot_mode == False \
-    else f"robot_training_model_{parameters['model_flag']}_{parameters['experiment_number']}.log"  
+    log_file = f"training_model_{parameters['model_flag']}.log" if robot_mode == False \
+    else f"robot_training_model_{parameters['model_flag']}.log"  
     filemode = 'a' if os.path.exists(log_file) else 'w'
     logging.basicConfig(filename=log_file, filemode=filemode, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
 
     # Initialize the LSTM model
     # Use the flag to confirm the right model is used and to save it
@@ -124,7 +126,7 @@ def main(parameters):
 
     # Log parameters
 
-    logging.info(f"hyperparams (modeltype_{model.get_flag()}_expnumb_{parameters['experiment_number']}) : {parameters}")
+    logging.info(f"hyperparams: final_test_err {error_dic[model.get_flag() + '_test_err'][-1]} (modeltype_{model.get_flag()}_expnumb_{parameters['experiment_number']}) : {parameters}")
     #logging.info(f"LSTM - Experiment number {parameters['experiment_number']}_{average_traj_err_train_lstm}")   
     logging.info("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
     logging.info("\n")
@@ -136,8 +138,11 @@ if __name__ == '__main__':
     testing_mode = False
     robot_mode = True
 
-    parameter_list = get_model_params(testing_mode, robot_mode)
-    
+    if robot_mode:
+        parameter_list = get_model_params_robot(testing_mode, robot_mode, params_search=True, params_specific="OR_LSTM")
+    else:
+        parameter_list = get_model_params(testing_mode, robot_mode, params_search=True)
+
     list_of_NNs_to_train = ["OR_LSTM", "LSTM", "OR_TCN", "TCN", "OR_MLP", "MLP"] #["OR_LSTM", "OR_MLP", "OR_TCN", "OR_RNN", "OR_GRU", "LSTM", "MLP", "TCN", "RNN", "GRU"]
     error_dic = {x : [] for x in [x + "_train_err" for x in list_of_NNs_to_train] + [x + "_test_err" for x in list_of_NNs_to_train]}
 
