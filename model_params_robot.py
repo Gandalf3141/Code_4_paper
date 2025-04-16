@@ -276,10 +276,10 @@ def get_model_params_robot(testing_mode=True, robot_mode = False, params_specifi
         
         param_list = search_params_robot(params_specific)
         for parameters in param_list:
-            parameters["percentage_of_data"]  = 0.2
+            parameters["percentage_of_data"]  = 0.6
             parameters["cut_off_timesteps"]  = 0
-            parameters["part_of_data"]  = 50
-            parameters["epochs"]  = 5
+            parameters["part_of_data"]  = 0
+            parameters["epochs"]  = 200
             parameters["T_max"] =  int(parameters["epochs"] / 2)
             parameters["test_every_epochs"]  = int(parameters["epochs"]/2)
             parameters["experiment_number"]  = np.random.randint(0,1000)
