@@ -10,54 +10,253 @@ import numpy as np
 def search_params_robot(params_specific):
 
     if params_specific == "OR_LSTM":
-        parameters_or_lstm1 =    {
+        p1 =    {
                         "model_flag" : "OR_LSTM",
                         "window_size" : 32,
                         "h_size" : 4,
                         "l_num" : 1,
-                        "learning_rate" : 0.001,
                         "batch_size" : 20,
                         "experiment_number" : np.random.randint(0,1000),
                         }  
-        parameters_or_lstm2 =    {
+        p2 =    {
                         "model_flag" : "OR_LSTM",
                         "window_size" : 32,
                         "h_size" : 8,
                         "l_num" : 1,
-                        "learning_rate" : 0.001,
                         "batch_size" : 20,
                         "experiment_number" : np.random.randint(0,1000),
                         } 
-        parameters_or_lstm3 =    {
+        p3 =    {
                         "model_flag" : "OR_LSTM",
                         "window_size" : 32,
                         "h_size" : 16,
                         "l_num" : 1,
-                        "learning_rate" : 0.001,
                         "batch_size" : 20,
                         "experiment_number" : np.random.randint(0,1000),
                         }  
-        parameters_or_lstm4 =    {
+        p4 =    {
                         "model_flag" : "OR_LSTM",
                         "window_size" : 32,
                         "h_size" : 32,
                         "l_num" : 1,
-                        "learning_rate" : 0.001,
                         "batch_size" : 20,
                         "experiment_number" : np.random.randint(0,1000),
                         } 
-        parameters_or_lstm5 =    {
+        p5 =    {
                         "model_flag" : "OR_LSTM",
                         "window_size" : 32,
                         "h_size" : 64,
                         "l_num" : 1,
-                        "learning_rate" : 0.001,
                         "batch_size" : 20,
                         "experiment_number" : np.random.randint(0,1000),
                         }  
 
+    if params_specific == "LSTM":
+        p1 =    {
+                        "model_flag" : "LSTM",
+                        "window_size" : 32,
+                        "h_size" : 4,
+                        "l_num" : 1,
+                        "batch_size" : 20,
+                        "experiment_number" : np.random.randint(0,1000),
+                        }  
+        p2 =    {
+                        "model_flag" : "LSTM",
+                        "window_size" : 32,
+                        "h_size" : 8,
+                        "l_num" : 1,
+                        "batch_size" : 20,
+                        "experiment_number" : np.random.randint(0,1000),
+                        } 
+        p3 =    {
+                        "model_flag" : "LSTM",
+                        "window_size" : 32,
+                        "h_size" : 16,
+                        "l_num" : 1,
+                        "batch_size" : 20,
+                        "experiment_number" : np.random.randint(0,1000),
+                        }  
+        p4 =    {
+                        "model_flag" : "LSTM",
+                        "window_size" : 32,
+                        "h_size" : 32,
+                        "l_num" : 1,
+                        "batch_size" : 20,
+                        "experiment_number" : np.random.randint(0,1000),
+                        } 
+        p5 =    {
+                        "model_flag" : "LSTM",
+                        "window_size" : 32,
+                        "h_size" : 64,
+                        "l_num" : 1,
+                        "batch_size" : 20,
+                        "experiment_number" : np.random.randint(0,1000),
+                        } 
 
-    params_list = [parameters_or_lstm1, parameters_or_lstm2, parameters_or_lstm3, parameters_or_lstm4, parameters_or_lstm5]
+    if params_specific == "OR_MLP":
+               
+            p1 =    {
+                    "model_flag" : "OR_MLP",
+                    "window_size" : 20,
+                    "h_size" : 8,
+                    "l_num" : 1,
+                    "learning_rate" : 0.001,
+                    "batch_size" : 80,
+                    "experiment_number" : np.random.randint(0,1000)
+                    }
+            p2 = p1.copy()
+            p2["h_size"] = 16
+            p3 = p1.copy()
+            p3["h_size"] = 32
+            p4 = p1.copy()
+            p4["h_size"] = 64
+            p5 = p1.copy()
+            p5["h_size"] = 128
+    
+    if params_specific == "MLP":
+               
+            p1 =    {
+                    "model_flag" : "OR_MLP",
+                    "window_size" : 20,
+                    "h_size" : 8,
+                    "l_num" : 1,
+                    "learning_rate" : 0.001,
+                    "batch_size" : 80,
+                    "experiment_number" : np.random.randint(0,1000)
+                    }
+            p2 = p1.copy()
+            p2["h_size"] = 16
+            p3 = p1.copy()
+            p3["h_size"] = 32
+            p4 = p1.copy()
+            p4["h_size"] = 64
+            p5 = p1.copy()
+            p5["h_size"] = 128
+
+    if params_specific == "OR_TCN":
+            
+            p1 =    {
+                "model_flag" : "OR_TCN",
+                "window_size" : 20,
+                "n_hidden" : 5,
+                "levels" : 4,
+                "kernel_size" : 3,
+                "dropout" : 0,
+                "batch_size" : 30,
+                "experiment_number" : np.random.randint(0,1000)                        
+                        }
+            p2 = p1.copy()
+            p2["h_size"] = 4
+            p3 = p1.copy()
+            p3["h_size"] = 5
+            p4 = p1.copy()
+            p4["h_size"] = 6
+            p5 = p1.copy()
+            p5["h_size"] = 7    
+
+    if params_specific == "TCN":
+            
+            p1 =    {
+                "model_flag" : "TCN",
+                "window_size" : 20,
+                "n_hidden" : 5,
+                "levels" : 4,
+                "kernel_size" : 3,
+                "dropout" : 0,
+                "batch_size" : 30,
+                "experiment_number" : np.random.randint(0,1000)                        
+                        }
+            p2 = p1.copy()
+            p2["h_size"] = 4
+            p3 = p1.copy()
+            p3["h_size"] = 5
+            p4 = p1.copy()
+            p4["h_size"] = 6
+            p5 = p1.copy()
+            p5["h_size"] = 7 
+
+    if params_specific == "OR_GRU":
+            
+            p1 =    {
+                "model_flag" : "OR_GRU",
+                "window_size" : 16,
+                "h_size" : 4,
+                "l_num" : 1,
+                "learning_rate" : 0.001,
+                "batch_size" : 20,
+                "experiment_number" : np.random.randint(0,1000)                        
+                        }
+            p2 = p1.copy()
+            p2["h_size"] = 8
+            p3 = p1.copy()
+            p3["h_size"] = 16
+            p4 = p1.copy()
+            p4["h_size"] = 32
+            p5 = p1.copy()
+            p5["h_size"] = 64
+
+    if params_specific == "GRU":
+            
+            p1 =    {
+                "model_flag" : "GRU",
+                "window_size" : 16,
+                "h_size" : 4,
+                "l_num" : 1,
+                "learning_rate" : 0.001,
+                "batch_size" : 20,
+                "experiment_number" : np.random.randint(0,1000)                        
+                        }
+            p2 = p1.copy()
+            p2["h_size"] = 8
+            p3 = p1.copy()
+            p3["h_size"] = 16
+            p4 = p1.copy()
+            p4["h_size"] = 32
+            p5 = p1.copy()
+            p5["h_size"] = 64
+
+    if params_specific == "OR_RNN":
+            
+            p1 =    {
+                "model_flag" : "OR_RNN",
+                "window_size" : 16,
+                "h_size" : 4,
+                "l_num" : 1,
+                "learning_rate" : 0.001,
+                "batch_size" : 20,
+                "experiment_number" : np.random.randint(0,1000)                        
+                        }
+            p2 = p1.copy()
+            p2["h_size"] = 8
+            p3 = p1.copy()
+            p3["h_size"] = 16
+            p4 = p1.copy()
+            p4["h_size"] = 32
+            p5 = p1.copy()
+            p5["h_size"] = 64
+
+    if params_specific == "RNN":
+            
+            p1 =    {
+                "model_flag" : "RNN",
+                "window_size" : 16,
+                "h_size" : 4,
+                "l_num" : 1,
+                "learning_rate" : 0.001,
+                "batch_size" : 20,
+                "experiment_number" : np.random.randint(0,1000)                        
+                        }
+            p2 = p1.copy()
+            p2["h_size"] = 8
+            p3 = p1.copy()
+            p3["h_size"] = 16
+            p4 = p1.copy()
+            p4["h_size"] = 32
+            p5 = p1.copy()
+            p5["h_size"] = 64
+
+
+    params_list = [p1, p2, p3, p4, p5]
     return params_list
 
 
@@ -276,7 +475,8 @@ def get_model_params_robot(testing_mode=True, robot_mode = False, params_specifi
         
         param_list = search_params_robot(params_specific)
         for parameters in param_list:
-            parameters["percentage_of_data"]  = 0.6
+            parameters["learning_rate"] = 0.001 #leave learning rate fixed because of scheduler and Adamoptimizer
+            parameters["percentage_of_data"]  = 0.2
             parameters["cut_off_timesteps"]  = 0
             parameters["part_of_data"]  = 0
             parameters["epochs"]  = 200
