@@ -134,11 +134,11 @@ if __name__ == '__main__':
 
     # toggle to test everything with a small amount of data
     testing_mode = False
-    robot_mode = False
+    robot_mode = True
 
     parameter_list = get_model_params(testing_mode, robot_mode)
     
-    list_of_NNs_to_train =["OR_GRU"] #["OR_LSTM", "OR_MLP", "OR_TCN", "OR_RNN", "OR_GRU", "LSTM", "MLP", "TCN", "RNN", "GRU"]
+    list_of_NNs_to_train = ["OR_LSTM", "LSTM", "OR_TCN", "TCN", "OR_MLP", "MLP"] #["OR_LSTM", "OR_MLP", "OR_TCN", "OR_RNN", "OR_GRU", "LSTM", "MLP", "TCN", "RNN", "GRU"]
     error_dic = {x : [] for x in [x + "_train_err" for x in list_of_NNs_to_train] + [x + "_test_err" for x in list_of_NNs_to_train]}
 
     for parameters in parameter_list:
