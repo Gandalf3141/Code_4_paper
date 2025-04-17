@@ -28,6 +28,11 @@ from meas_get_data import *
 from meas_dataloader import *
 from meas_dataset import *  
 from meas_test_func_fs import *
+from ray.tune.search.optuna import OptunaSearch
+from ray import tune
+import hyperopt
+from ray.tune.search import ConcurrencyLimiter
+
 
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
 #device = "cpu"
@@ -95,7 +100,7 @@ def train_cifar(config, data_dir=None):
         traindataloader = DataLoader(train_set, batch_size=int(params["b_s"]), pin_memory=True)
     ###################
     
-    for epoch in range(start_epoch, 10):
+    for epoch in range(start_epoch, 100):
 
         loss_fn = nn.MSELoss()
         model.train()
@@ -160,11 +165,11 @@ def main(num_samples=10, max_num_epochs=10, gpus_per_trial=2):
     data_dir = custom_temp_dir
 
     config = {
-        "h_size": tune.choice([4,8,16,24]),
+        "h_size": tune.choice([4,8,16,24,36,46]),
         "lr": tune.loguniform(1e-4, 1e-2),
-        "b_s": tune.choice([6,16, 24, 32, 40]), #difficult because of dataloader and dataset...
-        "l_num" : tune.choice([1, 2]),
-        "ws" : tune.choice([8,16,24,32])
+        "b_s": tune.choice([8, 16, 20, 26, 32, 40]), #difficult because of dataloader and dataset...
+        "l_num" : tune.choice([1, 2, 3]),
+        "ws" : tune.choice([8,16,24,32, 48])
     }
 
     #load_data(config, data_dir)
@@ -173,14 +178,18 @@ def main(num_samples=10, max_num_epochs=10, gpus_per_trial=2):
         metric="loss",
         mode="min",
         max_t=max_num_epochs,
-        grace_period=1,
+        grace_period=10,
         reduction_factor=2,
     )
+    algo = OptunaSearch(metric="loss", mode="min")
+    algo = ConcurrencyLimiter(algo, max_concurrent=4)
+
     result = tune.run(
         partial(train_cifar, data_dir=data_dir),
-        resources_per_trial={"cpu": 2, "gpu": gpus_per_trial},
+        resources_per_trial={"cpu": 16, "gpu": gpus_per_trial},
         config=config,
         num_samples=num_samples,
+        search_alg=algo,
         scheduler=scheduler,
         log_to_file=True,
         storage_path=custom_temp_dir,
