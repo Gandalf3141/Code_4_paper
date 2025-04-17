@@ -18,3 +18,17 @@ To Do: (03.04.2025)
 
 - Körner Termin?
 >>>
+
+*******************************************************************
+To Do: (03.04.2025)
+*******************************************************************
+Status: 
+-RNN und GRU hinzugefügt.
+-Roboterarm (benchmark dataset) hinzugefügt inklusive Training/Testing für alle Netze
+-Hyperparam search für Robotarm und Ventil noch notwendig (bei Masterarbeit nur OR_LSTM für Ventil Messdaten trainiert..)
+
+Plan bis 24.4. :
+
+Hyperparam search abschließen + 'one pager' schreiben
+
+danach ein großer Trainingsrun und der wird genommen auch wenn manche Netze nicht wirklich funktionieren(?) 

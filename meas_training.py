@@ -107,7 +107,9 @@ def main(parameters):
         if (e+1) % parameters["test_every_epochs"] == 0:
             test_error = test(data=test_data, model=model, window_size=parameters["window_size"])
             print(f"({model.get_flag()}) - Testing error : ", test_error)
-
+            if test_error < 0.001:
+                print("Early stopping: Test error is below the threshold -> Training stopped.")
+                break
         
         error_dic[model.get_flag() + "_test_err"].append(test_error)
         error_dic[model.get_flag() + "_train_err"].append(train_error)
