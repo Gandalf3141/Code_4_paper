@@ -234,7 +234,7 @@ class OR_TCN(nn.Module):
 
         return pred
 
-# OR - RNN
+# OR - RNN (copy of LSTM)
 class OR_RNN(nn.Module):
 
     def __init__(self, input_size, hidden_size, out_size, layers, window_size=4, flag="OR_RNN"):
@@ -287,7 +287,7 @@ class OR_RNN(nn.Module):
         pred = self.linear(rnn_out)
         return pred, hidden
 
-# OR - GRU
+# OR - GRU (copy of GRU)
 class OR_GRU(nn.Module):
 
     def __init__(self, input_size, hidden_size, out_size, layers, window_size=4, flag="OR_GRU"):

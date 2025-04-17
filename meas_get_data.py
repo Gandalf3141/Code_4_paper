@@ -48,7 +48,6 @@ def normalize_invert(data):
     data = data * (x_max_inv - x_min_inv) + x_min_inv
     return data
 
-
 def get_data(path, num_inits=0):
 
     df = pd.read_csv(path)
@@ -66,6 +65,8 @@ def get_data(path, num_inits=0):
 
     return tensor
 
+# get robot arm data - same formatting as valve data
+# no normalize_invert missing and no visulize
 def get_data_robot():
     #training data is 33 trajectories each executed 2 times -> 66 trajectories
     #normalising will make the trajectories not start at 0! 

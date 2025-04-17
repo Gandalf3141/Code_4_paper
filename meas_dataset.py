@@ -21,7 +21,7 @@ class custom_simple_dataset(Dataset):
 
         return inp, label
 
-# LSTM and TCN without OR
+# LSTM, RNN, GRU, TCN without OR
 class CustomDataset(Dataset):
 
 

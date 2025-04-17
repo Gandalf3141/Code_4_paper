@@ -27,6 +27,24 @@ def save_model_with_versioning(base_path):
     print(f"Model saved at: {save_path}")
     return save_path
 
+'''
+what main does:
+
+create NN based on the parameterset (type of network is also specified in the parameterset)
+create log file 
+import data 
+start training + testing loop (with early stopping)
+saves model with versioning
+saves errors as csv file with versioning
+
+Set mode you need
+    testing_mode = False (fast runs for testing on small data)
+    robot_mode = True (robot arm data)
+    param_search_mode = True (hyperparameter search)
+
+'''
+
+
 def main(parameters):
 
     if robot_mode == True:
@@ -85,6 +103,7 @@ def main(parameters):
 
     #optimizer
     optimizer = torch.optim.AdamW(model.parameters(), lr = parameters["learning_rate"])
+    # not used (use_lr_scheduler=False)
     lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max = parameters["T_max"], eta_min=0, last_epoch=-1, verbose=False)
 
     if parameters["model_flag"] != model.get_flag():

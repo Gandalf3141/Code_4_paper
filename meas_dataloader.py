@@ -5,6 +5,7 @@ from meas_dataset import *
 from torch.utils.data import DataLoader
 import numpy as np
 
+# Data Loader for training (Ventil + robot arm)
 def get_dataloader(input_data, params, robot_mode=False):
     
 
