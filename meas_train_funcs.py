@@ -115,7 +115,7 @@ def train_tcn_no_or_derivative(traindataloader, model, optimizer, lr_scheduler, 
         lr_scheduler.step()
     return np.mean(total_loss)
 
-def train(traindataloader, model, optimizer, lr_scheduler, use_lr_scheduler=False):
+def train(traindataloader, model, optimizer, lr_scheduler=None, use_lr_scheduler=False):
     
     loss_fn = nn.MSELoss()
     model.train()

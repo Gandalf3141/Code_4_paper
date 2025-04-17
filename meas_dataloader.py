@@ -24,16 +24,16 @@ def get_dataloader(input_data, params, robot_mode=False):
     # dataloader for batching during training
     if "OR" in params["model_flag"]:
         train_set = custom_simple_dataset(train_data, window_size=params["window_size"])
-        train_loader = DataLoader(train_set, batch_size=params["batch_size"], pin_memory=True)
+        train_loader = DataLoader(train_set, batch_size=int(params["batch_size"]), pin_memory=True)
     if  params["model_flag"] in ["LSTM", "RNN", "GRU"]:
         train_set = CustomDataset(train_data, window_size=params["window_size"])
-        train_loader = DataLoader(train_set, batch_size=params["batch_size"], pin_memory=True)
+        train_loader = DataLoader(train_set, batch_size=int(params["batch_size"]), pin_memory=True)
     if "TCN" == params["model_flag"]:
         train_set = CustomDataset(train_data, window_size=params["window_size"])
-        train_loader = DataLoader(train_set, batch_size=params["batch_size"], pin_memory=True)
+        train_loader = DataLoader(train_set, batch_size=int(params["batch_size"]), pin_memory=True)
     if "MLP" == params["model_flag"]:
         train_set = CustomDataset_mlp(train_data, window_size=params["window_size"])
-        train_loader = DataLoader(train_set, batch_size=params["batch_size"], pin_memory=True)
+        train_loader = DataLoader(train_set, batch_size=int(params["batch_size"]), pin_memory=True)
 
 
     return train_loader, test_data
