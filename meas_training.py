@@ -146,8 +146,10 @@ if __name__ == '__main__':
     else:
         parameter_list = get_model_params(testing_mode, robot_mode, params_search=True)
 
+    all_nets= ["OR_LSTM", "OR_MLP", "OR_TCN", "OR_RNN", "OR_GRU", "LSTM", "MLP", "TCN", "RNN", "GRU"]
     list_of_NNs_to_train = ["OR_LSTM", "LSTM", "OR_TCN", "TCN", "OR_MLP", "MLP"] #["OR_LSTM", "OR_MLP", "OR_TCN", "OR_RNN", "OR_GRU", "LSTM", "MLP", "TCN", "RNN", "GRU"]
-    error_dic = {x : [] for x in [x + "_train_err" for x in list_of_NNs_to_train] + [x + "_test_err" for x in list_of_NNs_to_train]}
+    error_dic = {x : [] for x in [x + "_train_err" for x in all_nets]
+                  + [x + "_test_err" for x in all_nets]}
 
     if param_search_mode:
         for param_search_nets in ["OR_LSTM", "OR_MLP", "OR_TCN", "OR_RNN", "OR_GRU", "LSTM", "MLP", "TCN", "RNN", "GRU"]:
