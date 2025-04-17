@@ -86,3 +86,143 @@
 2025-04-17 10:29:50,433 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 2025-04-17 10:29:50,433 - INFO - 
 
+2025-04-17 10:31:21,041 - INFO - hyperparams: final_test_err 0.047109940399726234 (modeltype_OR_LSTM_expnumb_946) : {'model_flag': 'OR_LSTM', 'window_size': 8, 'h_size': 16, 'l_num': 1, 'batch_size': 24, 'experiment_number': 946, 'learning_rate': 0.001, 'percentage_of_data': 0.2, 'cut_off_timesteps': 0, 'part_of_data': 0, 'epochs': 200, 'T_max': 100, 'test_every_epochs': 100}
+2025-04-17 10:31:21,041 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-17 10:31:21,041 - INFO - 
+
+2025-04-17 10:32:45,131 - INFO - hyperparams: final_test_err 0.042629216487209 (modeltype_OR_LSTM_expnumb_212) : {'model_flag': 'OR_LSTM', 'window_size': 8, 'h_size': 16, 'l_num': 1, 'batch_size': 32, 'experiment_number': 212, 'learning_rate': 0.001, 'percentage_of_data': 0.2, 'cut_off_timesteps': 0, 'part_of_data': 0, 'epochs': 200, 'T_max': 100, 'test_every_epochs': 100}
+2025-04-17 10:32:45,131 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-17 10:32:45,131 - INFO - 
+
+2025-04-17 10:34:09,988 - INFO - hyperparams: final_test_err 0.03913481843968233 (modeltype_OR_LSTM_expnumb_111) : {'model_flag': 'OR_LSTM', 'window_size': 8, 'h_size': 16, 'l_num': 1, 'batch_size': 48, 'experiment_number': 111, 'learning_rate': 0.001, 'percentage_of_data': 0.2, 'cut_off_timesteps': 0, 'part_of_data': 0, 'epochs': 200, 'T_max': 100, 'test_every_epochs': 100}
+2025-04-17 10:34:09,988 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-17 10:34:09,988 - INFO - 
+
+2025-04-17 10:46:59,133 - INFO - hyperparams: final_test_err 0.023461553268134594 (modeltype_OR_MLP_expnumb_510) : {'model_flag': 'OR_MLP', 'window_size': 20, 'h_size': 16, 'l_num': 1, 'learning_rate': 0.001, 'batch_size': 80, 'experiment_number': 510, 'percentage_of_data': 0.2, 'cut_off_timesteps': 0, 'part_of_data': 0, 'epochs': 200, 'T_max': 100, 'test_every_epochs': 100}
+2025-04-17 10:46:59,133 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-17 10:46:59,133 - INFO - 
+
+2025-04-17 10:59:49,533 - INFO - hyperparams: final_test_err 0.02695111557841301 (modeltype_OR_MLP_expnumb_431) : {'model_flag': 'OR_MLP', 'window_size': 20, 'h_size': 16, 'l_num': 1, 'learning_rate': 0.001, 'batch_size': 16, 'experiment_number': 431, 'percentage_of_data': 0.2, 'cut_off_timesteps': 0, 'part_of_data': 0, 'epochs': 200, 'T_max': 100, 'test_every_epochs': 100}
+2025-04-17 10:59:49,533 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-17 10:59:49,533 - INFO - 
+
+2025-04-17 11:12:53,474 - INFO - hyperparams: final_test_err 0.026179263678689797 (modeltype_OR_MLP_expnumb_562) : {'model_flag': 'OR_MLP', 'window_size': 20, 'h_size': 16, 'l_num': 1, 'learning_rate': 0.001, 'batch_size': 24, 'experiment_number': 562, 'percentage_of_data': 0.2, 'cut_off_timesteps': 0, 'part_of_data': 0, 'epochs': 200, 'T_max': 100, 'test_every_epochs': 100}
+2025-04-17 11:12:53,474 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-17 11:12:53,474 - INFO - 
+
+2025-04-17 11:25:47,048 - INFO - hyperparams: final_test_err 0.03445460585256418 (modeltype_OR_MLP_expnumb_752) : {'model_flag': 'OR_MLP', 'window_size': 20, 'h_size': 16, 'l_num': 1, 'learning_rate': 0.001, 'batch_size': 32, 'experiment_number': 752, 'percentage_of_data': 0.2, 'cut_off_timesteps': 0, 'part_of_data': 0, 'epochs': 200, 'T_max': 100, 'test_every_epochs': 100}
+2025-04-17 11:25:47,048 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-17 11:25:47,048 - INFO - 
+
+2025-04-17 11:38:42,758 - INFO - hyperparams: final_test_err 0.027959707813958328 (modeltype_OR_MLP_expnumb_763) : {'model_flag': 'OR_MLP', 'window_size': 20, 'h_size': 16, 'l_num': 1, 'learning_rate': 0.001, 'batch_size': 48, 'experiment_number': 763, 'percentage_of_data': 0.2, 'cut_off_timesteps': 0, 'part_of_data': 0, 'epochs': 200, 'T_max': 100, 'test_every_epochs': 100}
+2025-04-17 11:38:42,758 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-17 11:38:42,758 - INFO - 
+
+2025-04-17 11:43:56,349 - INFO - hyperparams: final_test_err 0.07520359754562378 (modeltype_OR_TCN_expnumb_510) : {'model_flag': 'OR_TCN', 'window_size': 20, 'n_hidden': 5, 'levels': 4, 'kernel_size': 3, 'dropout': 0, 'batch_size': 30, 'experiment_number': 510, 'learning_rate': 0.001, 'percentage_of_data': 0.2, 'cut_off_timesteps': 0, 'part_of_data': 0, 'epochs': 200, 'T_max': 100, 'test_every_epochs': 100}
+2025-04-17 11:43:56,350 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-17 11:43:56,350 - INFO - 
+
+2025-04-17 11:49:11,023 - INFO - hyperparams: final_test_err 0.0627362330754598 (modeltype_OR_TCN_expnumb_431) : {'model_flag': 'OR_TCN', 'window_size': 20, 'n_hidden': 5, 'levels': 4, 'kernel_size': 3, 'dropout': 0, 'batch_size': 16, 'experiment_number': 431, 'learning_rate': 0.001, 'percentage_of_data': 0.2, 'cut_off_timesteps': 0, 'part_of_data': 0, 'epochs': 200, 'T_max': 100, 'test_every_epochs': 100}
+2025-04-17 11:49:11,023 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-17 11:49:11,023 - INFO - 
+
+2025-04-17 11:54:25,726 - INFO - hyperparams: final_test_err 0.10672720397512118 (modeltype_OR_TCN_expnumb_562) : {'model_flag': 'OR_TCN', 'window_size': 20, 'n_hidden': 5, 'levels': 4, 'kernel_size': 3, 'dropout': 0, 'batch_size': 24, 'experiment_number': 562, 'learning_rate': 0.001, 'percentage_of_data': 0.2, 'cut_off_timesteps': 0, 'part_of_data': 0, 'epochs': 200, 'T_max': 100, 'test_every_epochs': 100}
+2025-04-17 11:54:25,726 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-17 11:54:25,726 - INFO - 
+
+2025-04-17 11:59:41,194 - INFO - hyperparams: final_test_err 0.06256993611653645 (modeltype_OR_TCN_expnumb_752) : {'model_flag': 'OR_TCN', 'window_size': 20, 'n_hidden': 5, 'levels': 4, 'kernel_size': 3, 'dropout': 0, 'batch_size': 32, 'experiment_number': 752, 'learning_rate': 0.001, 'percentage_of_data': 0.2, 'cut_off_timesteps': 0, 'part_of_data': 0, 'epochs': 200, 'T_max': 100, 'test_every_epochs': 100}
+2025-04-17 11:59:41,194 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-17 11:59:41,194 - INFO - 
+
+2025-04-17 12:04:56,035 - INFO - hyperparams: final_test_err 0.1302782197793325 (modeltype_OR_TCN_expnumb_763) : {'model_flag': 'OR_TCN', 'window_size': 20, 'n_hidden': 5, 'levels': 4, 'kernel_size': 3, 'dropout': 0, 'batch_size': 48, 'experiment_number': 763, 'learning_rate': 0.001, 'percentage_of_data': 0.2, 'cut_off_timesteps': 0, 'part_of_data': 0, 'epochs': 200, 'T_max': 100, 'test_every_epochs': 100}
+2025-04-17 12:04:56,035 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-17 12:04:56,035 - INFO - 
+
+2025-04-17 12:06:22,947 - INFO - hyperparams: final_test_err 1177.03662109375 (modeltype_OR_RNN_expnumb_510) : {'model_flag': 'OR_RNN', 'window_size': 16, 'h_size': 4, 'l_num': 1, 'learning_rate': 0.001, 'batch_size': 20, 'experiment_number': 510, 'percentage_of_data': 0.2, 'cut_off_timesteps': 0, 'part_of_data': 0, 'epochs': 200, 'T_max': 100, 'test_every_epochs': 100}
+2025-04-17 12:06:22,947 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-17 12:06:22,947 - INFO - 
+
+2025-04-17 12:07:47,638 - INFO - hyperparams: final_test_err 2862.8816731770835 (modeltype_OR_RNN_expnumb_431) : {'model_flag': 'OR_RNN', 'window_size': 16, 'h_size': 4, 'l_num': 1, 'learning_rate': 0.001, 'batch_size': 16, 'experiment_number': 431, 'percentage_of_data': 0.2, 'cut_off_timesteps': 0, 'part_of_data': 0, 'epochs': 200, 'T_max': 100, 'test_every_epochs': 100}
+2025-04-17 12:07:47,638 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-17 12:07:47,638 - INFO - 
+
+2025-04-17 12:09:13,146 - INFO - hyperparams: final_test_err 10.275075117746988 (modeltype_OR_RNN_expnumb_562) : {'model_flag': 'OR_RNN', 'window_size': 16, 'h_size': 4, 'l_num': 1, 'learning_rate': 0.001, 'batch_size': 24, 'experiment_number': 562, 'percentage_of_data': 0.2, 'cut_off_timesteps': 0, 'part_of_data': 0, 'epochs': 200, 'T_max': 100, 'test_every_epochs': 100}
+2025-04-17 12:09:13,146 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-17 12:09:13,146 - INFO - 
+
+2025-04-17 12:10:39,281 - INFO - hyperparams: final_test_err 0.2925750290354093 (modeltype_OR_RNN_expnumb_752) : {'model_flag': 'OR_RNN', 'window_size': 16, 'h_size': 4, 'l_num': 1, 'learning_rate': 0.001, 'batch_size': 32, 'experiment_number': 752, 'percentage_of_data': 0.2, 'cut_off_timesteps': 0, 'part_of_data': 0, 'epochs': 200, 'T_max': 100, 'test_every_epochs': 100}
+2025-04-17 12:10:39,281 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-17 12:10:39,281 - INFO - 
+
+2025-04-17 12:12:04,873 - INFO - hyperparams: final_test_err 824.8784993489584 (modeltype_OR_RNN_expnumb_763) : {'model_flag': 'OR_RNN', 'window_size': 16, 'h_size': 4, 'l_num': 1, 'learning_rate': 0.001, 'batch_size': 48, 'experiment_number': 763, 'percentage_of_data': 0.2, 'cut_off_timesteps': 0, 'part_of_data': 0, 'epochs': 200, 'T_max': 100, 'test_every_epochs': 100}
+2025-04-17 12:12:04,873 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-17 12:12:04,873 - INFO - 
+
+2025-04-17 12:13:32,011 - INFO - hyperparams: final_test_err 261.60035451253253 (modeltype_OR_GRU_expnumb_510) : {'model_flag': 'OR_GRU', 'window_size': 16, 'h_size': 4, 'l_num': 1, 'learning_rate': 0.001, 'batch_size': 20, 'experiment_number': 510, 'percentage_of_data': 0.2, 'cut_off_timesteps': 0, 'part_of_data': 0, 'epochs': 200, 'T_max': 100, 'test_every_epochs': 100}
+2025-04-17 12:13:32,011 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-17 12:13:32,011 - INFO - 
+
+2025-04-17 12:14:59,064 - INFO - hyperparams: final_test_err 8.812100648880005 (modeltype_OR_GRU_expnumb_431) : {'model_flag': 'OR_GRU', 'window_size': 16, 'h_size': 4, 'l_num': 1, 'learning_rate': 0.001, 'batch_size': 16, 'experiment_number': 431, 'percentage_of_data': 0.2, 'cut_off_timesteps': 0, 'part_of_data': 0, 'epochs': 200, 'T_max': 100, 'test_every_epochs': 100}
+2025-04-17 12:14:59,064 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-17 12:14:59,064 - INFO - 
+
+2025-04-17 12:16:26,830 - INFO - hyperparams: final_test_err 3712.8743764559426 (modeltype_OR_GRU_expnumb_562) : {'model_flag': 'OR_GRU', 'window_size': 16, 'h_size': 4, 'l_num': 1, 'learning_rate': 0.001, 'batch_size': 24, 'experiment_number': 562, 'percentage_of_data': 0.2, 'cut_off_timesteps': 0, 'part_of_data': 0, 'epochs': 200, 'T_max': 100, 'test_every_epochs': 100}
+2025-04-17 12:16:26,830 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-17 12:16:26,830 - INFO - 
+
+2025-04-17 12:17:53,608 - INFO - hyperparams: final_test_err 8689.683691660563 (modeltype_OR_GRU_expnumb_752) : {'model_flag': 'OR_GRU', 'window_size': 16, 'h_size': 4, 'l_num': 1, 'learning_rate': 0.001, 'batch_size': 32, 'experiment_number': 752, 'percentage_of_data': 0.2, 'cut_off_timesteps': 0, 'part_of_data': 0, 'epochs': 200, 'T_max': 100, 'test_every_epochs': 100}
+2025-04-17 12:17:53,608 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-17 12:17:53,608 - INFO - 
+
+2025-04-17 12:19:21,490 - INFO - hyperparams: final_test_err 20.012556711832683 (modeltype_OR_GRU_expnumb_763) : {'model_flag': 'OR_GRU', 'window_size': 16, 'h_size': 4, 'l_num': 1, 'learning_rate': 0.001, 'batch_size': 48, 'experiment_number': 763, 'percentage_of_data': 0.2, 'cut_off_timesteps': 0, 'part_of_data': 0, 'epochs': 200, 'T_max': 100, 'test_every_epochs': 100}
+2025-04-17 12:19:21,490 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-17 12:19:21,490 - INFO - 
+
+2025-04-17 12:20:50,028 - INFO - hyperparams: final_test_err 0.03920603170990944 (modeltype_OR_LSTM_expnumb_510) : {'model_flag': 'OR_LSTM', 'window_size': 8, 'h_size': 16, 'l_num': 1, 'batch_size': 20, 'experiment_number': 510, 'learning_rate': 0.001, 'percentage_of_data': 0.2, 'cut_off_timesteps': 0, 'part_of_data': 0, 'epochs': 200, 'T_max': 100, 'test_every_epochs': 100}
+2025-04-17 12:20:50,028 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-17 12:20:50,028 - INFO - 
+
+2025-04-17 12:22:19,785 - INFO - hyperparams: final_test_err 0.0335277458652854 (modeltype_OR_LSTM_expnumb_431) : {'model_flag': 'OR_LSTM', 'window_size': 8, 'h_size': 16, 'l_num': 1, 'batch_size': 16, 'experiment_number': 431, 'learning_rate': 0.001, 'percentage_of_data': 0.2, 'cut_off_timesteps': 0, 'part_of_data': 0, 'epochs': 200, 'T_max': 100, 'test_every_epochs': 100}
+2025-04-17 12:22:19,785 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-17 12:22:19,785 - INFO - 
+
+2025-04-17 12:23:49,198 - INFO - hyperparams: final_test_err 0.037548805897434555 (modeltype_OR_LSTM_expnumb_562) : {'model_flag': 'OR_LSTM', 'window_size': 8, 'h_size': 16, 'l_num': 1, 'batch_size': 24, 'experiment_number': 562, 'learning_rate': 0.001, 'percentage_of_data': 0.2, 'cut_off_timesteps': 0, 'part_of_data': 0, 'epochs': 200, 'T_max': 100, 'test_every_epochs': 100}
+2025-04-17 12:23:49,198 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-17 12:23:49,198 - INFO - 
+
+2025-04-17 12:25:18,699 - INFO - hyperparams: final_test_err 0.031509880597392716 (modeltype_OR_LSTM_expnumb_752) : {'model_flag': 'OR_LSTM', 'window_size': 8, 'h_size': 16, 'l_num': 1, 'batch_size': 32, 'experiment_number': 752, 'learning_rate': 0.001, 'percentage_of_data': 0.2, 'cut_off_timesteps': 0, 'part_of_data': 0, 'epochs': 200, 'T_max': 100, 'test_every_epochs': 100}
+2025-04-17 12:25:18,699 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-17 12:25:18,699 - INFO - 
+
+2025-04-17 12:26:48,744 - INFO - hyperparams: final_test_err 0.06815729662775993 (modeltype_OR_LSTM_expnumb_763) : {'model_flag': 'OR_LSTM', 'window_size': 8, 'h_size': 16, 'l_num': 1, 'batch_size': 48, 'experiment_number': 763, 'learning_rate': 0.001, 'percentage_of_data': 0.2, 'cut_off_timesteps': 0, 'part_of_data': 0, 'epochs': 200, 'T_max': 100, 'test_every_epochs': 100}
+2025-04-17 12:26:48,744 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-17 12:26:48,744 - INFO - 
+
+2025-04-17 12:40:28,699 - INFO - hyperparams: final_test_err 0.024481959640979767 (modeltype_OR_MLP_expnumb_510) : {'model_flag': 'OR_MLP', 'window_size': 20, 'h_size': 8, 'l_num': 1, 'learning_rate': 0.001, 'batch_size': 8, 'experiment_number': 510, 'percentage_of_data': 0.2, 'cut_off_timesteps': 0, 'part_of_data': 0, 'epochs': 200, 'T_max': 100, 'test_every_epochs': 100}
+2025-04-17 12:40:28,699 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-17 12:40:28,699 - INFO - 
+
+2025-04-17 12:53:24,065 - INFO - hyperparams: final_test_err 0.02836151358981927 (modeltype_OR_MLP_expnumb_431) : {'model_flag': 'OR_MLP', 'window_size': 20, 'h_size': 8, 'l_num': 1, 'learning_rate': 0.001, 'batch_size': 16, 'experiment_number': 431, 'percentage_of_data': 0.2, 'cut_off_timesteps': 0, 'part_of_data': 0, 'epochs': 200, 'T_max': 100, 'test_every_epochs': 100}
+2025-04-17 12:53:24,065 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-17 12:53:24,065 - INFO - 
+
+2025-04-17 13:06:19,072 - INFO - hyperparams: final_test_err 0.02856078774978717 (modeltype_OR_MLP_expnumb_562) : {'model_flag': 'OR_MLP', 'window_size': 20, 'h_size': 8, 'l_num': 1, 'learning_rate': 0.001, 'batch_size': 24, 'experiment_number': 562, 'percentage_of_data': 0.2, 'cut_off_timesteps': 0, 'part_of_data': 0, 'epochs': 200, 'T_max': 100, 'test_every_epochs': 100}
+2025-04-17 13:06:19,072 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-17 13:06:19,072 - INFO - 
+
+2025-04-17 13:19:13,272 - INFO - hyperparams: final_test_err 0.02473640162497759 (modeltype_OR_MLP_expnumb_752) : {'model_flag': 'OR_MLP', 'window_size': 20, 'h_size': 8, 'l_num': 1, 'learning_rate': 0.001, 'batch_size': 32, 'experiment_number': 752, 'percentage_of_data': 0.2, 'cut_off_timesteps': 0, 'part_of_data': 0, 'epochs': 200, 'T_max': 100, 'test_every_epochs': 100}
+2025-04-17 13:19:13,272 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-17 13:19:13,272 - INFO - 
+
+2025-04-17 13:32:07,250 - INFO - hyperparams: final_test_err 0.025377219853301842 (modeltype_OR_MLP_expnumb_763) : {'model_flag': 'OR_MLP', 'window_size': 20, 'h_size': 8, 'l_num': 1, 'learning_rate': 0.001, 'batch_size': 48, 'experiment_number': 763, 'percentage_of_data': 0.2, 'cut_off_timesteps': 0, 'part_of_data': 0, 'epochs': 200, 'T_max': 100, 'test_every_epochs': 100}
+2025-04-17 13:32:07,250 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-17 13:32:07,250 - INFO - 
+
+2025-04-17 13:35:59,977 - INFO - hyperparams: final_test_err 558671376597.3334 (modeltype_TCN_expnumb_510) : {'model_flag': 'TCN', 'window_size': 20, 'n_hidden': 5, 'levels': 4, 'kernel_size': 3, 'dropout': 0, 'batch_size': 30, 'experiment_number': 510, 'learning_rate': 0.001, 'percentage_of_data': 0.2, 'cut_off_timesteps': 0, 'part_of_data': 0, 'epochs': 200, 'T_max': 100, 'test_every_epochs': 100}
+2025-04-17 13:35:59,977 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-17 13:35:59,977 - INFO - 
+
+2025-04-17 13:42:46,293 - INFO - hyperparams: final_test_err 3.0804948122493597e+25 (modeltype_TCN_expnumb_431) : {'model_flag': 'TCN', 'window_size': 20, 'n_hidden': 5, 'levels': 4, 'kernel_size': 3, 'dropout': 0, 'batch_size': 16, 'experiment_number': 431, 'learning_rate': 0.001, 'percentage_of_data': 0.2, 'cut_off_timesteps': 0, 'part_of_data': 0, 'epochs': 200, 'T_max': 100, 'test_every_epochs': 100}
+2025-04-17 13:42:46,293 - INFO - --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2025-04-17 13:42:46,293 - INFO - 
+

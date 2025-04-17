@@ -20,7 +20,7 @@ import torchvision
 import torchvision.transforms as transforms
 from ray import tune
 from ray import train
-from ray.train import Checkpoint, get_checkpoint
+from ray.tune import Checkpoint, get_checkpoint
 from ray.tune.schedulers import ASHAScheduler
 import ray.cloudpickle as pickle
 from meas_NN_classes import *
@@ -30,7 +30,8 @@ from meas_dataset import *
 from meas_test_func_fs import *
 
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
-
+#device = "cpu"
+print(device)
 
 # def load_data(config, data_dir=None):
 
@@ -70,7 +71,7 @@ def train_cifar(config, data_dir=None):
 
     ###TRYING OUT THE DATALOADER
     params = {"model_flag": "OR_LSTM", 
-              "ws": 10,
+              "ws": int(config["ws"]),
               "b_s": int(config["b_s"]),
               "cut_off_timesteps": 0,
               "percentage_of_data": 0.8
@@ -86,11 +87,11 @@ def train_cifar(config, data_dir=None):
     #train_data = input_data[train_inits,:input_data.size(dim=1)-params["cut_off_timesteps"],:]
     #cut off timesteps at the start
     train_data = train_data[train_inits,params["cut_off_timesteps"]:,:]
-    test_data = train_data[test_inits,:,:]
+    #test_data = train_data[test_inits,:,:]
 
     # dataloader for batching during training
     if "OR" in params["model_flag"]:
-        train_set = custom_simple_dataset(train_data, window_size=params["w_s"])
+        train_set = custom_simple_dataset(train_data, window_size=int(params["ws"]))
         traindataloader = DataLoader(train_set, batch_size=int(params["b_s"]), pin_memory=True)
     ###################
     
@@ -137,7 +138,7 @@ def train_cifar(config, data_dir=None):
                 pickle.dump(checkpoint_data, fp)
 
             checkpoint = Checkpoint.from_directory(checkpoint_dir)
-            train.report(
+            tune.report(
                 {"loss": loss_mean_all_traj},
                 checkpoint=checkpoint,
             ) # {"loss": val_loss / val_steps, "accuracy": correct / total},
@@ -145,8 +146,13 @@ def train_cifar(config, data_dir=None):
 
 def main(num_samples=10, max_num_epochs=10, gpus_per_trial=2):
    
-    #data_dir = os.path.abspath("./data")
-    custom_temp_dir = "C:/ray_temp"
+
+    # data_dir = os.path.abspath("./data")
+    #custom_temp_dir = "C:/ray_temp"
+    if os.name == "nt":
+     custom_temp_dir=r"C:/ray_temp"
+    else:
+     custom_temp_dir=r"/home/rdpusr/ray_temp"
 
     # Ensure the directory exists
     if not os.path.exists(custom_temp_dir):
@@ -154,9 +160,11 @@ def main(num_samples=10, max_num_epochs=10, gpus_per_trial=2):
     data_dir = custom_temp_dir
 
     config = {
-        "h_size": tune.choice([2,4,8,16]),
+        "h_size": tune.choice([4,8,16,24]),
         "lr": tune.loguniform(1e-4, 1e-2),
-        "b_s": tune.choice([6,16,32]), #difficult because of dataloader and dataset...
+        "b_s": tune.choice([6,16, 24, 32, 40]), #difficult because of dataloader and dataset...
+        "l_num" : tune.choice([1, 2]),
+        "ws" : tune.choice([8,16,24,32])
     }
 
     #load_data(config, data_dir)
@@ -181,31 +189,41 @@ def main(num_samples=10, max_num_epochs=10, gpus_per_trial=2):
     best_trial = result.get_best_trial("loss", "min", "last")
     print(f"Best trial config: {best_trial.config}")
     print(f"Best trial final validation loss: {best_trial.last_result['loss']}")
-    print(f"Best trial final validation accuracy: {best_trial.last_result['accuracy']}")
 
-    model = OR_LSTM(input_size=12, hidden_size=best_trial.config["h_size"], out_size=6,
-                     layers=best_trial.config["l_num"], window_size=best_trial.config["ws"], flag="OR_LSTM").to(device)
+    #Test the best model
     device = "cpu"
+    best_trained_model = OR_LSTM(input_size=12, hidden_size=best_trial.config["h_size"], out_size=6,
+                     layers=best_trial.config["l_num"], window_size=best_trial.config["ws"], flag="OR_LSTM").to(device)
+
+
+
     if torch.cuda.is_available():
         device = "cuda:0"
         if gpus_per_trial > 1:
-            best_trained_model = nn.DataParallel(model)
+            best_trained_model = nn.DataParallel(best_trained_model)
     best_trained_model.to(device)
 
-    best_checkpoint = result.get_best_checkpoint(trial=best_trial, metric="accuracy", mode="max")
+    best_checkpoint = result.get_best_checkpoint(trial=best_trial, metric="loss", mode="max")
     with best_checkpoint.as_directory() as checkpoint_dir:
         data_path = Path(checkpoint_dir) / "data.pkl"
         with open(data_path, "rb") as fp:
             best_checkpoint_data = pickle.load(fp)
 
+
         train_data, test_data = get_data_robot()
-        train_loader, test_data = get_dataloader(train_data, best_trial.config)
+        params = {"model_flag": "OR_LSTM", 
+        "window_size": best_trial.config["ws"],
+        "batch_size": best_trial.config["b_s"],
+        "cut_off_timesteps": 0,
+        "percentage_of_data": 0.8
+        }
+        train_loader, test_data = get_dataloader(train_data, params)
         best_trained_model.load_state_dict(best_checkpoint_data["net_state_dict"])
        
-        test_acc = test(data=test_data, model=best_trained_model, device=device, window_size=best_trial.config["ws"])
-        print("Best trial test set accuracy: {}".format(test_acc))
+        test_acc = test(data=test_data, model=best_trained_model, window_size=best_trial.config["ws"])
+        print("Best trial test set loss: {}".format(test_acc))
 
 
 if __name__ == "__main__":
     # You can change the number of GPUs per trial here:
-    main(num_samples=10, max_num_epochs=10, gpus_per_trial=0)
+    main(num_samples=20, max_num_epochs=50, gpus_per_trial=1)
