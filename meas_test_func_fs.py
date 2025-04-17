@@ -100,6 +100,7 @@ def plot_results(x, pred, rescale=False, window_size=1, sim_data_index=0, featur
     plt.legend()
     plt.show()
 
+#old version
 def plot_histogramm(error_position : list,
                     error_pressure : list,
                     error_position_simulink : list,
@@ -150,6 +151,8 @@ def plot_histogramm(error_position : list,
     
     return
 
+
+# test function for all networks - works on both datasets!
 def test(
     data, 
     model, 

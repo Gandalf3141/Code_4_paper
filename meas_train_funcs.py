@@ -11,7 +11,7 @@ device = "cuda:0" if torch.cuda.is_available() else "cpu"
 
 # also for RNN and GRU
 def train_lstm_no_or_derivative(traindataloader, model, optimizer, lr_scheduler, use_lr_scheduler=False):
-
+    
     
     loss_fn = nn.MSELoss()
     model.train()
@@ -43,7 +43,9 @@ def train_lstm_no_or_derivative(traindataloader, model, optimizer, lr_scheduler,
     if use_lr_scheduler:
         lr_scheduler.step()
    # return the average error of the next step prediction
-    return np.mean(total_loss)def train_mlp_no_or_derivative(traindataloader, model, optimizer, lr_scheduler, use_lr_scheduler=False):
+    return np.mean(total_loss)
+
+def train_mlp_no_or_derivative(traindataloader, model, optimizer, lr_scheduler, use_lr_scheduler=False):
  
     loss_fn = nn.MSELoss()
     model.train()
@@ -167,3 +169,41 @@ def train(traindataloader, model, optimizer, lr_scheduler, use_lr_scheduler=Fals
         lr_scheduler.step()
     
     return np.mean(total_loss)
+
+
+
+# deprecated:
+
+# def train_lstm(input_data, model,  optimizer, lr_scheduler, use_OR=True):
+ 
+#     loss_fn = nn.MSELoss()
+#     model.train()
+#     total_loss = []
+
+
+#     for k, (x,y) in enumerate(input_data):  # inp = (u, x) label = x
+        
+#         x = x.to(device)
+#         y = y.to(device)
+        
+#         output, _ = model(x)
+  
+#         # reset the gradient
+#         optimizer.zero_grad(set_to_none=True)
+        
+#         # calculate the error
+#         loss = loss_fn(output, y)
+
+#         loss.backward()
+#         torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+#         optimizer.step()
+#         total_loss.append(loss.item())
+#     lr_scheduler.step()
+#     #print(lr_scheduler.get_last_lr())
+
+#     return np.mean(total_loss)
+
+# def train_mlp(input_data, model,  optimizer, lr_scheduler):
+#  return
+# def train_tcn(input_data, model,  optimizer, lr_scheduler):
+#  return
