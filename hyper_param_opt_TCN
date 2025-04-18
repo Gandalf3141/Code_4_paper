@@ -38,26 +38,12 @@ device = "cuda:0" if torch.cuda.is_available() else "cpu"
 #device = "cpu"
 print(device)
 
-def train_cifar(config, data_dir=None, model_key=""):
+def train_cifar(config, data_dir=None):
     
-    inp_size, output_size = 12, 6
-    if model_key == "OR_LSTM":        
-        model = OR_LSTM(input_size=12, hidden_size=config["h_size"], out_size=6,
-                        layers=config["l_num"], window_size=config["ws"]).to(device)
-
-    if model_key == "OR_MLP":
-        model = OR_MLP(input_size=inp_size*config["ws"], hidden_size=config["h_size"],
-                        output_size=output_size, l_num=config["l_num"], window_size=config["ws"]).to(device)
-
-    if  model_key == "OR_RNN":
-        model = OR_RNN(input_size=inp_size, hidden_size=config["h_size"], out_size=output_size, 
-                        layers=config["l_num"], window_size=config["ws"]).to(device)
-        
-    if model_key == "OR_GRU":
-        model = OR_GRU(input_size=inp_size, hidden_size=config["h_size"], out_size=output_size, 
-                        layers=config["l_num"], window_size=config["ws"]).to(device)
-
-
+    num_channels = [config["n_hidden"]] * config["levels"]
+    model = OR_TCN(input_size=12, output_size=6 , num_channels=num_channels,
+                        kernel_size=config["kernel_size"], dropout=config["dropout"], windowsize=config["ws"]).to(device)
+    
     optimizer = torch.optim.AdamW(model.parameters(), lr = config["lr"])
 
 
@@ -76,7 +62,7 @@ def train_cifar(config, data_dir=None, model_key=""):
     #traindataloader, test_data_loader = load_data(config)
 
     ###TRYING OUT THE DATALOADER
-    params = {"model_flag": model_key, 
+    params = {"model_flag": "OR_TCN", 
               "ws": int(config["ws"]),
               "b_s": int(config["b_s"]),
               "cut_off_timesteps": 0,
@@ -167,10 +153,12 @@ def main(num_samples=10, max_num_epochs=10, gpus_per_trial=2, model_key=""):
     data_dir = custom_temp_dir
 
     config = {
-        "h_size": tune.choice([4,8,16,24,36,46]),
+        "n_hidden": tune.choice([4,5]),
+        "levels": tune.choice([4,5]),
         "lr": tune.loguniform(1e-4, 1e-2),
         "b_s": tune.choice([8, 16, 20, 26, 32, 40]), #difficult because of dataloader and dataset...
-        "l_num" : tune.choice([1, 2, 3]),
+        "kernel_size" : tune.choice([5, 6, 7]),
+        "dropout" : 0,
         "ws" : tune.choice([8,16,24,32, 48])
     }
 
@@ -188,7 +176,7 @@ def main(num_samples=10, max_num_epochs=10, gpus_per_trial=2, model_key=""):
     #search_alg=algo,
 
     result = tune.run(
-        partial(train_cifar, data_dir=data_dir, model_key=model_key),
+        partial(train_cifar, data_dir=data_dir),
         resources_per_trial={"cpu": 16, "gpu": gpus_per_trial},
         config=config,
         num_samples=num_samples,
@@ -206,25 +194,15 @@ def main(num_samples=10, max_num_epochs=10, gpus_per_trial=2, model_key=""):
     device = "cpu"
     inp_size, output_size = 12, 6
 
-    if model_key == "OR_LSTM":        
-        best_trained_model = OR_LSTM(input_size=12, hidden_size=best_trial.config["h_size"], out_size=6,
-                        layers=best_trial.config["l_num"], window_size=best_trial.config["ws"]).to(device)
 
-    if model_key == "OR_MLP":
-        best_trained_model = OR_MLP(input_size=inp_size*best_trial.config["ws"], hidden_size=best_trial.config["h_size"],
-                        output_size=output_size, l_num=best_trial.config["l_num"], window_size=best_trial.config["ws"]).to(device)
-
-    if  model_key == "OR_RNN":
-        best_trained_model = OR_RNN(input_size=inp_size, hidden_size=best_trial.config["h_size"], out_size=output_size, 
-                        layers=best_trial.config["l_num"], window_size=best_trial.config["ws"]).to(device)
-        
-    if model_key == "OR_GRU":
-        best_trained_model = OR_GRU(input_size=inp_size, hidden_size=best_trial.config["h_size"], out_size=output_size, 
-                        layers=best_trial.config["l_num"], window_size=best_trial.config["ws"]).to(device)
+    if model_key == "OR_TCN":
+        num_channels = [best_trial.config["n_hidden"]] * best_trial.config["levels"]
+        best_trained_model = OR_TCN(input_size=inp_size, output_size=output_size , num_channels=num_channels,
+                        kernel_size=best_trial.config["kernel_size"], dropout=best_trial.config["dropout"], windowsize=best_trial.config["ws"]).to(device)
 
     with open("hyper_opt_results.txt", "a") as file:
         file.write(best_trained_model.get_flag() + "\n" + "loss" + str(best_trial.last_result['loss']) + str(best_trial.config) + "\n" + "-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-" "\n")
-     
+    
 
     if torch.cuda.is_available():
         device = "cuda:0"
@@ -240,7 +218,7 @@ def main(num_samples=10, max_num_epochs=10, gpus_per_trial=2, model_key=""):
 
 
         train_data, test_data = get_data_robot()
-        params = {"model_flag": model_key, 
+        params = {"model_flag": "OR_TCN", 
         "window_size": best_trial.config["ws"],
         "batch_size": best_trial.config["b_s"],
         "cut_off_timesteps": 0,
@@ -255,9 +233,9 @@ def main(num_samples=10, max_num_epochs=10, gpus_per_trial=2, model_key=""):
 
 if __name__ == "__main__":
     # You can change the number of GPUs per trial here:
-    model_keys =["OR_LSTM", "OR_MLP", "OR_GRU", "OR_RNN"] 
+    model_keys =["OR_TCN"] 
     for model_key in model_keys:
-        main(num_samples=2, max_num_epochs=2, gpus_per_trial=1, model_key=model_key)
+        main(num_samples=5, max_num_epochs=5, gpus_per_trial=1, model_key=model_key)
 
 # OR_LSTM : Best trial config: {'h_size': 46, 'lr': 0.0012515516643351928, 'b_s': 8, 'l_num': 2, 'ws': 48}
 # OR_MLP : 

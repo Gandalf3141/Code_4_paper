@@ -158,12 +158,12 @@ if __name__ == '__main__':
     # toggle to test everything with a small amount of data
     testing_mode = False
     robot_mode = True
-    param_search_mode = True
+    param_search_mode = False
 
     if robot_mode:
-        parameter_list = get_model_params_robot(testing_mode, robot_mode, params_search=True, params_specific="OR_LSTM")
+        parameter_list = get_model_params_robot(testing_mode, robot_mode, params_search=param_search_mode, params_specific="OR_LSTM")
     else:
-        parameter_list = get_model_params(testing_mode, robot_mode, params_search=True)
+        parameter_list = get_model_params(testing_mode, robot_mode, params_search=param_search_mode)
 
     all_nets= ["OR_LSTM", "OR_MLP", "OR_TCN", "OR_RNN", "OR_GRU", "LSTM", "MLP", "TCN", "RNN", "GRU"]
     list_of_NNs_to_train = ["OR_LSTM", "LSTM", "OR_TCN", "TCN", "OR_MLP", "MLP"] #["OR_LSTM", "OR_MLP", "OR_TCN", "OR_RNN", "OR_GRU", "LSTM", "MLP", "TCN", "RNN", "GRU"]
@@ -172,7 +172,7 @@ if __name__ == '__main__':
 
     if param_search_mode:
         for param_search_nets in ["OR_LSTM", "OR_MLP", "OR_TCN", "OR_RNN", "OR_GRU", "LSTM", "MLP", "TCN", "RNN", "GRU"]:
-            parameter_list = get_model_params_robot(testing_mode, robot_mode, params_search=True, params_specific=param_search_nets)
+            parameter_list = get_model_params_robot(testing_mode, robot_mode, params_search=param_search_mode, params_specific=param_search_nets)
             for parameters in parameter_list:
                 main(parameters)
     else:

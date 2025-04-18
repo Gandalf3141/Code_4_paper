@@ -231,11 +231,11 @@ def get_model_params_robot(testing_mode=True, robot_mode = False, params_specifi
     
     parameters_or_lstm =    {
                         "model_flag" : "OR_LSTM",
-                        "window_size" : 16,
-                        "h_size" : 8,
-                        "l_num" : 3,
-                        "learning_rate" : 0.001,
-                        "batch_size" : 20,
+                        "window_size" : 48,
+                        "h_size" : 46,
+                        "l_num" : 2,
+                        "learning_rate" : 0.0012515,
+                        "batch_size" : 8,
                         "percentage_of_data" : 0.8,
                         "cut_off_timesteps" : 0,
                         "part_of_data" : 0,
