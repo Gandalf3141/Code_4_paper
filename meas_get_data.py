@@ -90,12 +90,12 @@ def get_data_robot():
     mean = train_tensor.mean()
     std = train_tensor.std()
     # Normalize the tensor
-    normalized_tensor = (train_tensor - mean) / std
+    normalized_tensor_train = (train_tensor - mean) / std
 
     num_trajectories = 66
-    num_steps = normalized_tensor.size(0) // num_trajectories
-    num_features = normalized_tensor.size(1)
-    reshaped_tensor_train = normalized_tensor[:39930,:].view(num_trajectories, num_steps, num_features)
+    num_steps = normalized_tensor_train.size(0) // num_trajectories
+    num_features = normalized_tensor_train.size(1)
+    reshaped_tensor_train = normalized_tensor_train[:39930,:].view(num_trajectories, num_steps, num_features)
 
 
     # Load testing data
@@ -107,14 +107,14 @@ def get_data_robot():
     test_tensor = torch.tensor(test_df.values, dtype=torch.float32)
 
     # Normalize the tensor
-    normalized_tensor_train = (test_tensor - mean) / std
+    normalized_tensor_test = (test_tensor - mean) / std
 
     num_trajectories = 6
-    num_steps = normalized_tensor_train.size(0) // num_trajectories
-    num_features = normalized_tensor_train.size(1)
-    reshaped_tensor_test = normalized_tensor_train.view(num_trajectories, num_steps, num_features)
+    num_steps = normalized_tensor_test.size(0) // num_trajectories
+    num_features = normalized_tensor_test.size(1)
+    reshaped_tensor_test = normalized_tensor_test.view(num_trajectories, num_steps, num_features)
 
-
+        #      train data               test data
     return reshaped_tensor_train, reshaped_tensor_test #shapes torch.Size([66, 605, 12]) torch.Size([6, 606, 12])
 
 
